@@ -8,7 +8,7 @@
  * y el mapa geográfico de la tauromaquia.
  * 
  * Características:
- * - 5 preguntas históricas rigurosas con 4 opciones contrastadas.
+ * - 8 preguntas históricas rigurosas con 4 opciones contrastadas.
  * - Basadas en las fuentes primarias de la cronología y mapa.
  * - Bilingüismo sincrónico total (ES / EN) vía evento 'historiaLanguageChange'.
  * - Feedback inmediato con explicación histórica y cotejo documental.
@@ -24,186 +24,294 @@
   'use strict';
 
   // =========================================================================
-  // 1. 📚 BANCO DE PREGUNTAS HISTÓRICAS RIGUROSAS (5 TEMAS BILINGÜES)
+  // 1. 📚 BANCO DE PREGUNTAS HISTÓRICAS RIGUROSAS (8 TEMAS BILINGÜES)
   // =========================================================================
   const QUIZ_QUESTIONS = [
     {
-      id: 'siete-partidas',
-      timelineEventIndex: 1, // Hito 2: Las Siete Partidas (Siglo XIII)
+      id: 'q1-origen-medieval',
+      timelineEventIndex: 0, // Hito 1: Primeras crónicas en Ávila (Siglo XI)
       mapLocation: null,
-      categoryEs: 'Derecho Medieval & Corona de Castilla',
-      categoryEn: 'Medieval Law & Crown of Castile',
-      questionEs: '¿Cómo reguló el código medieval de Las Siete Partidas de Alfonso X el Sabio la lidia de fieras a cambio de precio o recompensa económica?',
-      questionEn: 'How did King Alfonso X the Wise’s medieval legal code, Las Siete Partidas, regulate fighting wild beasts for monetary reward?',
+      categoryEs: 'Edad Media • Función Militar & Caballeresca',
+      categoryEn: 'Middle Ages • Military & Equestrian Function',
+      questionEs: '¿Cuál era el propósito original de la lidia de toros durante el período medieval en España?',
+      questionEn: 'What was the original purpose of bullfighting during the medieval period in Spain?',
       options: [
         {
           id: 0,
-          textEs: 'Prohibió de forma absoluta toda lidia de toros en Castilla y León bajo pena de excomunión eclesiástica.',
-          textEn: 'It enacted a blanket prohibition of all bull spectacles across Castile and León under penalty of excommunication.'
+          textEs: 'Ceremonias religiosas',
+          textEn: 'Religious ceremonies'
         },
         {
           id: 1,
-          textEs: 'Calificó de infames a quienes lidiaban fieras por precio, mientras eximía el alanceamiento a caballo practicado por nobles como prueba de valor militar.',
-          textEn: 'It branded men who fought beasts for money with legal infamy, while exempting noble equestrian spearing as an honorable display of martial valor.'
+          textEs: 'Ejercicios militares y ecuestres para caballeros',
+          textEn: 'Military and equestrian exercises for knights'
         },
         {
           id: 2,
-          textEs: 'Creó el primer gremio oficial de toreros asalariados y fijó las normas obligatorias de protección para peones de a pie.',
-          textEn: 'It established the first official guild of salaried toreros and mandated safety regulations for foot assistants.'
+          textEs: 'Fiestas agrícolas',
+          textEn: 'Agricultural festivals'
         },
         {
           id: 3,
-          textEs: 'Permitió la lidia remunerada únicamente a miembros consagrados de órdenes militares y caballeros cruzados.',
-          textEn: 'It permitted paid bullfighting exclusively to consecrated members of military orders and crusader knights.'
+          textEs: 'Entretenimiento para comerciantes',
+          textEn: 'Entertainment for merchants'
         }
       ],
       correctIndex: 1,
-      explanationEs: 'En la Partida VII, Título VI, Ley 4, Alfonso X el Sabio consagró la «infamia de derecho» para los hombres que arriesgaban su vida ante fieras por precio ante el pueblo, inhabilitándolos procesalmente como testigos, jueces o abogados. En contraposición, eximió expresamente a los caballeros que alanceaban toros a caballo «por probar sus fuerzas y gentileza» sin mediar dinero.',
-      explanationEn: 'In Partida VII, Title VI, Law 4, Alfonso X decreed legal infamy for men risking their lives against wild beasts for pay, stripping them of courtroom rights as witnesses, judges, or advocates. Conversely, he explicitly exempted knights spearing bulls on horseback "to test their strength and noble chivalry" without monetary exchange.',
-      sourceEs: 'Las Siete Partidas, Partida VII, Tít. VI, Ley 4 (PUB-LH-1974-51, BOE / BNE)',
-      sourceEn: 'Las Siete Partidas, Partida VII, Tit. VI, Law 4 (PUB-LH-1974-51, BOE / BNE)'
+      explanationEs: 'Durante la Edad Media hispana, la lidia del toro bravo formaba parte de los ejercicios marciales y ecuestres de los caballeros feudales para adiestrarse en la monta a la jineta, el alanceamiento y la agilidad bélica.',
+      explanationEn: 'In medieval Spain, confronting fighting bulls served as military and equestrian training for feudal knights, developing their horsemanship, lance handling, and combat agility in the face of sudden danger.',
+      sourceEs: 'Crónicas medievales de Ávila (1080) y Crónicas de Alfonso XI (BNE MSS/10231)',
+      sourceEn: 'Medieval Chronicles of Ávila (1080) & Chronicles of Alfonso XI (BNE MSS/10231)'
     },
     {
-      id: 'transicion-a-pie',
-      timelineEventIndex: 4, // Hito 5: Real Maestranza de Ronda (1785)
-      mapLocation: 'ronda',
-      categoryEs: 'Siglo XVIII • Ilustración y Profesionalización',
-      categoryEn: '18th Century • Enlightenment & Professionalization',
-      questionEs: '¿Qué factores determinaron la transición del toreo caballeresco a caballo a la tauromaquia profesional a pie durante el siglo XVIII?',
-      questionEn: 'What key factors drove the transition from aristocratic mounted bullfighting to professional bullfighting on foot in the 18th century?',
+      id: 'q2-siete-partidas-1265',
+      timelineEventIndex: 1, // Hito 2: Las Siete Partidas (1265)
+      mapLocation: null,
+      categoryEs: 'Derecho Medieval • Corona de Castilla',
+      categoryEn: 'Medieval Law • Crown of Castile',
+      questionEs: '¿Qué estableció Las Siete Partidas (1265) de Alfonso X respecto a la lidia de toros por dinero?',
+      questionEn: 'What did Alfonso X’s Las Siete Partidas (1265) establish regarding fighting bulls for money?',
       options: [
         {
           id: 0,
-          textEs: 'El desinterés y restricción borbónica del toreo ecuestre nobiliario, permitiendo que peones y lidiadores populares profesionalizaran la lidia a pie en plazas monumentales.',
-          textEn: 'Bourbon discouragement and restrictions on aristocratic mounted jousts, enabling plebeian assistants to professionalize foot-based bullfighting in monumental arenas.'
+          textEs: 'Animó a todos los ciudadanos a participar.',
+          textEn: 'It encouraged all citizens to participate.'
         },
         {
           id: 1,
-          textEs: 'Una ordenanza de las Cortes de Cádiz que obligó a todos los lidiadores a desmontar del caballo por razones de orden público.',
-          textEn: 'An ordinance issued by the Cortes of Cádiz ordering all fighters to dismount from horses for public safety reasons.'
+          textEs: 'Creó escuelas profesionales de tauromaquia.',
+          textEn: 'It established professional bullfighting schools.'
         },
         {
           id: 2,
-          textEs: 'La sustitución generalizada del ganado bravo por reses mansas de tiro y labor en todos los festejos patronales.',
-          textEn: 'The widespread substitution of fighting bulls with tame oxen and draft cattle across all municipal festivals.'
+          textEs: 'Calificó de infames procesales a quienes lidiaban toros por lucro o recompensa económica.',
+          textEn: 'It classified those who fought bulls for monetary gain as legally infamous.'
         },
         {
           id: 3,
-          textEs: 'Un decreto de la Inquisición española que declaró herejía montar a caballo en festejos taurinos públicos.',
-          textEn: 'A decree by the Spanish Inquisition declaring mounted riding during public bull spectacles to be an act of heresy.'
+          textEs: 'Prohibió todas las actividades ecuestres.',
+          textEn: 'It prohibited all equestrian activities.'
         }
       ],
-      correctIndex: 0,
-      explanationEs: 'Con la dinastía de los Borbones y la Real Pragmática de 1785 de Carlos III, la alta nobleza abandonó progresivamente la lidia ecuestre. Los peones populares que antes asistían a los caballeros asumieron el protagonismo en el ruedo, construyéndose plazas cerradas como la Real Maestranza de Ronda (1785) y consagrando a figuras como Pedro Romero, quien codificó la muleta y la estocada a pie.',
-      explanationEn: 'With the arrival of the Bourbon dynasty and Carlos III’s 1785 Pragmatic Sanction, high aristocracy gradually withdrew from mounted spearing. Plebeian foot assistants took center stage in dedicated arenas such as Ronda’s Real Maestranza (1785), elevating masters like Pedro Romero who standardized footwork, the muleta, and swordplay.',
+      correctIndex: 2,
+      explanationEs: 'En la Partida VII, Título VI, Ley 4, Alfonso X el Sabio consagró la «infamia de derecho» para los hombres que arriesgaban su vida ante fieras por precio, inhabilitándolos como testigos, jueces o procuradores en los tribunales.',
+      explanationEn: 'In Partida VII, Title VI, Law 4, Alfonso X enacted legal infamy for men risking their lives against wild beasts for monetary reward, barring them from testifying or serving in courtroom proceedings.',
+      sourceEs: 'Las Siete Partidas de Alfonso X el Sabio, Partida VII, Tít. VI, Ley 4 (BOE / BNE)',
+      sourceEn: 'Las Siete Partidas of Alfonso X the Wise, Partida VII, Tit. VI, Law 4 (BOE / BNE)'
+    },
+    {
+      id: 'q3-de-salute-gregis-1567',
+      timelineEventIndex: 2, // Hito 3: Bula de Pío V (1567)
+      mapLocation: null,
+      categoryEs: 'Siglo XVI • Censura Eclesiástica',
+      categoryEn: '16th Century • Ecclesiastical Censorship',
+      questionEs: '¿Qué papa promulgó la bula De Salute Gregis en 1567, amenazando a los lidiadores con la excomunión?',
+      questionEn: 'Which pope issued De Salute Gregis in 1567, threatening bullfighters with excommunication?',
+      options: [
+        {
+          id: 0,
+          textEs: 'El papa Gregorio XIII',
+          textEn: 'Pope Gregory XIII'
+        },
+        {
+          id: 1,
+          textEs: 'El papa Pío V',
+          textEn: 'Pope Pius V'
+        },
+        {
+          id: 2,
+          textEs: 'El papa Urbano VIII',
+          textEn: 'Pope Urban VIII'
+        },
+        {
+          id: 3,
+          textEs: 'El papa León X',
+          textEn: 'Pope Leo X'
+        }
+      ],
+      correctIndex: 1,
+      explanationEs: 'El papa Pío V promulgó el 1 de noviembre de 1567 la constitución «De Salute Gregis», prohibiendo los festejos taurinos bajo pena de excomunión ipso facto y negando la sepultura cristiana a los lidiadores que muriesen en la plaza.',
+      explanationEn: 'Pope Pius V issued the papal constitution «De Salute Gregis» on November 1, 1567, banning bull spectacles under penalty of immediate excommunication and denying Christian burial to those killed in the ring.',
+      sourceEs: 'Bula Pontificia «De Salute Gregis», Roma, 1 de noviembre de 1567 (Archivum Secretum Vaticanum)',
+      sourceEn: 'Papal Bull «De Salute Gregis», Rome, November 1, 1567 (Vatican Secret Archives)'
+    },
+    {
+      id: 'q4-transicion-siglo-xviii',
+      timelineEventIndex: 4, // Hito 5: Real Maestranza de Ronda (1785)
+      mapLocation: 'ronda',
+      categoryEs: 'Siglo XVIII • Ilustración y Profesionalización a Pie',
+      categoryEn: '18th Century • Enlightenment & Professionalization on Foot',
+      questionEs: '¿Qué cambio trascendental se produjo en la tauromaquia española durante el siglo XVIII?',
+      questionEn: 'What major change occurred in Spanish bullfighting during the 18th century?',
+      options: [
+        {
+          id: 0,
+          textEs: 'La tauromaquia fue sustituida por las carreras de caballos.',
+          textEn: 'Bullfighting was replaced by horse racing.'
+        },
+        {
+          id: 1,
+          textEs: 'La Iglesia introdujo la tauromaquia profesional.',
+          textEn: 'The Church introduced professional bullfighting.'
+        },
+        {
+          id: 2,
+          textEs: 'La lidia transitó del toreo caballeresco a caballo hacia la tauromaquia profesional a pie.',
+          textEn: 'Bullfighting shifted from aristocratic horseback traditions toward professional bullfighting on foot.'
+        },
+        {
+          id: 3,
+          textEs: 'Todas las plazas de toros fueron clausuradas de forma permanente.',
+          textEn: 'All bullrings were closed permanently.'
+        }
+      ],
+      correctIndex: 2,
+      explanationEs: 'Con la dinastía de los Borbones y la desafección de la nobleza por la lidia ecuestre, los lidiadores populares de a pie asumieron el protagonismo en el ruedo, construyéndose plazas cerradas como la Real Maestranza de Ronda (1785) y codificándose la lidia moderna.',
+      explanationEn: 'With the arrival of the Bourbon dynasty and noble withdrawal from equestrian jousting, plebeian foot assistants took center stage, establishing modern foot-based lidia, professional rules, and monumental arenas like Ronda (1785).',
       sourceEs: 'Libro de Actas de la Real Maestranza de Ronda (1785) y Tratado de Pepe-Hillo (1796, BNE R/12423)',
       sourceEn: 'Ronda Real Maestranza Minutes (1785) & Pepe-Hillo’s Treatise (1796, BNE R/12423)'
     },
     {
-      id: 'juan-belmonte',
+      id: 'q5-juan-belmonte-1914',
       timelineEventIndex: 6, // Hito 7: Temple Estético de Belmonte (1914)
       mapLocation: 'sevilla',
       categoryEs: 'Edad de Oro • Revolución Estética',
       categoryEn: 'Golden Age • Aesthetic Revolution',
-      questionEs: '¿Cuál fue la principal revolución estética y técnica introducida por Juan Belmonte en el toreo a principios del siglo XX?',
-      questionEn: 'What was the primary aesthetic and technical revolution introduced by Juan Belmonte in early 20th-century bullfighting?',
+      questionEs: '¿Qué principio introdujo Juan Belmonte que revolucionó la tauromaquia en 1914?',
+      questionEn: 'Which principle did Juan Belmonte introduce that revolutionized bullfighting in 1914?',
       options: [
         {
           id: 0,
-          textEs: 'Recuperar el rejoneo a caballo como suerte principal antes de entrar a matar.',
-          textEn: 'Reviving mounted rejoneo as the primary phase before the final sword thrust.'
+          textEs: 'Torear a caballo',
+          textEn: 'Torear a caballo'
         },
         {
           id: 1,
-          textEs: 'Sustituir el toreo de piernas y huida por la quietud geométrica («parar, templar y mandar»), toreando en el terreno del toro con temple rítmico.',
-          textEn: 'Replacing evasive footwork and retreat with geometric stillness («stop, temper, command»), citing the bull within its own ground with rhythmic deceleration.'
+          textEs: 'Parar, templar y mandar',
+          textEn: 'Parar, templar y mandar'
         },
         {
           id: 2,
-          textEs: 'Sustituir el estoque de acero tradicional por varas de madera acolchadas sin muerte del animal.',
-          textEn: 'Replacing the traditional steel sword with padded wooden batons to spare the animal’s life.'
+          textEs: 'De Salute Gregis',
+          textEn: 'De Salute Gregis'
         },
         {
           id: 3,
-          textEs: 'Suprimir definitivamente la figura de los picadores y el tercio de varas en todas las plazas de primera categoría.',
-          textEn: 'Abolishing picadores and the lance phase permanently across all first-category arenas.'
+          textEs: 'Las Siete Partidas',
+          textEn: 'Las Siete Partidas'
         }
       ],
       correctIndex: 1,
-      explanationEs: 'Juan Belmonte demolió el axioma tradicional decimonónico («o te quitas tú o te quita el toro»). Demostró que, permaneciendo inmóvil en el albero e imponiendo el ritmo del engaño («parar, templar y mandar»), era posible torear dentro de los terrenos naturales del toro, transformando la lidia de ejercicio atlético de esquiva en una obra plástica y escultórica.',
-      explanationEn: 'Juan Belmonte shattered the traditional 19th-century axiom ("either you move away or the bull removes you"). He demonstrated that by planting his feet motionless in the sand and dictating the tempo of the pass ("parar, templar y mandar"), one could fight inside the bull’s natural territory, transforming tauromaquia from an evasive athletic duel into sculptural art.',
+      explanationEs: 'Juan Belmonte demolió el axioma decimonónico («o te quitas tú o te quita el toro»), demostrando que permaneciendo inmóvil en el albero e imponiendo el ritmo del engaño («parar, templar y mandar») se podía torear dentro de los terrenos naturales del animal, convirtiendo el toreo en arte escultórico.',
+      explanationEn: 'Juan Belmonte shattered the traditional axiom ("either you move away or the bull removes you"), proving that planting one’s feet motionless and dictating the tempo («parar, templar y mandar») allowed fighting inside the bull’s natural ground, transforming the spectacle into sculptural art.',
       sourceEs: 'Manuel Chaves Nogales: «Juan Belmonte, matador de toros» (1934, Alianza Editorial)',
       sourceEn: 'Manuel Chaves Nogales: "Juan Belmonte, Matador de Toros" (1934, Alianza Editorial)'
     },
     {
-      id: 'cataluna-2010',
-      timelineEventIndex: 9, // Hito 10: Parlamento de Cataluña (2010 / 2012)
-      mapLocation: 'barcelona',
-      categoryEs: 'Debate Contemporáneo • ILP Ciudadana',
-      categoryEn: 'Contemporary Debate • Citizen ILP',
-      questionEs: '¿Cuál fue el cauce legislativo y el origen de la votación parlamentaria de 2010 que aprobó la prohibición de las corridas de toros en Cataluña?',
-      questionEn: 'What was the legislative channel and origin of the 2010 parliamentary vote that enacted the ban on bullfighting in Catalonia?',
+      id: 'q6-tragedia-talavera-1920',
+      timelineEventIndex: 7, // Hito 8: Tragedia de Talavera (1920)
+      mapLocation: 'talavera',
+      categoryEs: 'Edad de Oro • Tragedia y Leyenda',
+      categoryEn: 'Golden Age • Tragedy & Legend',
+      questionEs: '¿Qué célebre torero murió en el ruedo en 1920 durante la Edad de Oro de la tauromaquia española?',
+      questionEn: 'Which famous bullfighter died in the arena in 1920 during Spain’s Golden Age of bullfighting?',
       options: [
         {
           id: 0,
-          textEs: 'Un decreto-ley de urgencia promulgado directamente por el Consejo de Ministros del Gobierno de España.',
-          textEn: 'An emergency executive decree enacted directly by the Council of Ministers of the Government of Spain.'
+          textEs: 'Pedro Romero',
+          textEn: 'Pedro Romero'
         },
         {
           id: 1,
-          textEs: 'Una Iniciativa Legislativa Popular (ILP) ciudadana promovida por la plataforma «Prou!», que culminó en la Ley catalana 28/2010.',
-          textEn: 'A citizen-backed Popular Legislative Initiative (ILP) promoted by the «Prou!» platform, resulting in Catalan Law 28/2010.'
+          textEs: 'Pepe-Hillo',
+          textEn: 'Pepe-Hillo'
         },
         {
           id: 2,
-          textEs: 'Una sentencia judicial del Tribunal Europeo de Derechos Humanos (TEDH) que ordenó clausurar la plaza Monumental de Barcelona.',
-          textEn: 'A judicial verdict by the European Court of Human Rights (ECHR) ordering the closure of Barcelona’s Monumental bullring.'
+          textEs: 'Juan Belmonte',
+          textEn: 'Juan Belmonte'
         },
         {
           id: 3,
-          textEs: 'Una directiva comunitaria vinculante del Parlamento Europeo que prohibió la tauromaquia en todos los Estados miembros de la UE.',
-          textEn: 'A binding directive from the European Parliament banning bullfighting across all member states of the European Union.'
+          textEs: 'Joselito «El Gallo»',
+          textEn: 'Joselito “El Gallo”'
+        }
+      ],
+      correctIndex: 3,
+      explanationEs: 'El 16 de mayo de 1920, José Gómez Ortega «Joselito El Gallo», la mayor cumbre técnica y dominadora del toreo, falleció en la plaza de Talavera de la Reina a consecuencia de la cornada del toro «Bailador», marcando un hito trágico imborrable en la historia cultural de España.',
+      explanationEn: 'On May 16, 1920, José Gómez Ortega «Joselito El Gallo», considered the supreme technical master of the Golden Age, died in Talavera de la Reina after being fatally gored by the bull «Bailador», leaving a profound tragedy in Spanish history.',
+      sourceEs: 'Parte Facultativo de la Plaza de Talavera de la Reina (16 de mayo de 1920, Archivo Histórico)',
+      sourceEn: 'Official Medical Certificate of Talavera de la Reina Bullring (May 16, 1920, Historical Archive)'
+    },
+    {
+      id: 'q7-cataluna-2010',
+      timelineEventIndex: 9, // Hito 10: Parlamento de Cataluña (2010)
+      mapLocation: 'barcelona',
+      categoryEs: 'Debate Contemporáneo • Iniciativa Ciudadana',
+      categoryEn: 'Contemporary Debate • Citizen Initiative',
+      questionEs: '¿Cuál fue el resultado de la iniciativa ciudadana en Cataluña en 2010?',
+      questionEn: 'What was the outcome of the citizen-led initiative in Catalonia in 2010?',
+      options: [
+        {
+          id: 0,
+          textEs: 'La tauromaquia se convirtió en obligatoria en los festivales culturales.',
+          textEn: 'Bullfighting became compulsory at cultural festivals.'
+        },
+        {
+          id: 1,
+          textEs: 'Cataluña prohibió las corridas de toros en la comunidad autónoma.',
+          textEn: 'Catalonia banned bullfighting in the region.'
+        },
+        {
+          id: 2,
+          textEs: 'España abolió todas las fiestas tradicionales.',
+          textEn: 'Spain abolished all traditional festivals.'
+        },
+        {
+          id: 3,
+          textEs: 'La tauromaquia se declaró derecho constitucional fundamental.',
+          textEn: 'Bullfighting became a fundamental constitutional right.'
         }
       ],
       correctIndex: 1,
-      explanationEs: 'La abolición catalana de 2010 fue fruto de la Iniciativa Legislativa Popular (ILP) ciudadana «Prou!», respaldada por 180.000 firmas acreditadas. El Parlament debatió y aprobó la Ley 28/2010 el 28 de julio de 2010, que suprimió la excepción taurina de la ley de protección animal con efectos a 1 de enero de 2012. La plaza Monumental de Barcelona celebró su última corrida el 25 de septiembre de 2011.',
-      explanationEn: 'The 2010 Catalan ban was sparked by the citizen Popular Legislative Initiative (ILP) «Prou!», endorsed by 180,000 certified signatures. The Parliament of Catalonia debated and enacted Law 28/2010 on July 28, 2010, repealing the bullfighting exception in regional animal welfare legislation effective January 1, 2012. Barcelona’s Monumental held its final corrida on September 25, 2011.',
-      sourceEs: 'Ley 28/2010, de 3 de agosto, de modificación de la ley animal catalana (BOE-A-2010-13838)',
-      sourceEn: 'Catalan Law 28/2010 amending animal protection statutes (BOE-A-2010-13838)'
+      explanationEs: 'Impulsada por la Iniciativa Legislativa Popular (ILP) «Prou!» con más de 180.000 firmas, el Parlamento de Cataluña aprobó el 28 de julio de 2010 la Ley 28/2010, prohibiendo las corridas de toros en Cataluña con efectos desde el 1 de enero de 2012.',
+      explanationEn: 'Prompted by the citizen-backed Popular Legislative Initiative (ILP) «Prou!» with over 180,000 verified signatures, the Parliament of Catalonia enacted Law 28/2010 on July 28, 2010, banning bullfighting across the region effective January 1, 2012.',
+      sourceEs: 'Ley catalana 28/2010, de 3 de agosto, de modificación de la ley animal (BOE-A-2010-13838)',
+      sourceEn: 'Catalan Law 28/2010 on animal protection amendments (BOE-A-2010-13838)'
     },
     {
-      id: 'stc-177-2016',
-      timelineEventIndex: 11, // Hito 12: Sentencia STC 177/2016 (20 Oct 2016)
+      id: 'q8-stc-177-2016',
+      timelineEventIndex: 11, // Hito 12: Sentencia STC 177/2016 (2016)
       mapLocation: 'madrid',
       categoryEs: 'Jurisprudencia Constitucional • Competencias',
       categoryEn: 'Constitutional Jurisprudence • Jurisdictions',
-      questionEs: '¿Qué doctrina jurídica vinculante estableció el Tribunal Constitucional en su Sentencia STC 177/2016 respecto a la Ley estatal 18/2013 y la prohibición catalana?',
-      questionEn: 'What binding legal doctrine did the Spanish Constitutional Court establish in Judgment STC 177/2016 concerning state Law 18/2013 and the Catalan ban?',
+      questionEs: '¿Qué resolvió el Tribunal Constitucional de España en la Sentencia STC 177/2016?',
+      questionEn: 'What did the Spanish Constitutional Court decide in Judgment STC 177/2016?',
       options: [
         {
           id: 0,
-          textEs: 'Declaró inconstitucional la prohibición total autonómica, dictaminando que la competencia regional en bienestar animal no puede anular una manifestación declarada patrimonio cultural por el Estado.',
-          textEn: 'It declared the blanket regional ban unconstitutional, ruling that regional animal welfare powers cannot extinguish a manifestation designated as cultural heritage by the State.'
+          textEs: 'Prohibió definitivamente la tauromaquia en toda España.',
+          textEn: 'It permanently banned bullfighting throughout Spain.'
         },
         {
           id: 1,
-          textEs: 'Avaló plenamente la prohibición catalana y anuló la Ley estatal 18/2013 por vulnerar las competencias exclusivas de la Generalitat.',
-          textEn: 'It fully upheld the Catalan prohibition and nullified state Law 18/2013 for infringing upon exclusive regional competences.'
+          textEs: 'Declaró la tauromaquia como derecho humano fundamental.',
+          textEn: 'It declared bullfighting a fundamental human right.'
         },
         {
           id: 2,
-          textEs: 'Declaró que la tauromaquia es un derecho fundamental humano protegido expresamente por el artículo 15 de la Constitución Española.',
-          textEn: 'It declared bullfighting to be an individual fundamental human right explicitly protected under Article 15 of the Spanish Constitution.'
+          textEs: 'Anuló la prohibición de Cataluña, dictaminando que las competencias autonómicas de protección animal no pueden prohibir totalmente una tradición cultural reconocida por el Estado.',
+          textEn: 'It overturned Catalonia’s ban, ruling that regional animal-protection powers could not completely prohibit a nationally recognized cultural tradition.'
         },
         {
           id: 3,
-          textEs: 'Obligó a todas las Comunidades Autónomas a financiar con presupuestos públicos obligatorios un mínimo de diez festejos anuales.',
-          textEn: 'It mandated all Autonomous Communities to fund a minimum of ten annual bullfighting events with mandatory public budgets.'
+          textEs: 'Derogó la Ley estatal 18/2013.',
+          textEn: 'It abolished Law 18/2013.'
         }
       ],
-      correctIndex: 0,
-      explanationEs: 'El Pleno del Tribunal Constitucional sentenció que, si bien las Comunidades Autónomas ostentan competencias sobre espectáculos públicos y protección de animales, no pueden ejercerlas hasta el extremo de prohibir de forma absoluta una tradición que el legislador estatal ha regulado y protegido como patrimonio cultural inmaterial común en virtud de los artículos 149.1.28 y 149.2 de la Constitución (Ley 18/2013).',
-      explanationEn: 'The Constitutional Court Plenary held that although Autonomous Communities hold powers over public spectacles and animal welfare, they cannot exercise them to the point of completely banning a cultural tradition that state legislation (Law 18/2013) has recognized and protected as common intangible cultural heritage pursuant to Articles 149.1.28 and 149.2 of the Spanish Constitution.',
+      correctIndex: 2,
+      explanationEs: 'El Pleno del Tribunal Constitucional sentenció que las competencias autonómicas sobre espectáculos públicos o bienestar animal no pueden vaciar de contenido la competencia estatal para preservar el patrimonio cultural común protegido por la Ley 18/2013, declarando inconstitucional la prohibición absoluta.',
+      explanationEn: 'The Constitutional Court Plenary ruled that regional powers over public events and animal welfare cannot extinguish a cultural tradition protected as common intangible heritage by state Law 18/2013, voiding Catalonia’s blanket ban.',
       sourceEs: 'Sentencia del Tribunal Constitucional STC 177/2016 (BOE-A-2016-11197, 20 Oct 2016)',
       sourceEn: 'Constitutional Court Judgment STC 177/2016 (BOE-A-2016-11197, Oct 20, 2016)'
     }
@@ -215,7 +323,7 @@
   let currentLanguage = 'es';
   let currentView = 'intro'; // 'intro' | 'play' | 'results'
   let currentQuestionIndex = 0;
-  let userAnswers = [null, null, null, null, null];
+  let userAnswers = new Array(QUIZ_QUESTIONS.length).fill(null);
   let isAnswerLocked = false;
 
   // Referencias a contenedores del DOM
@@ -226,16 +334,16 @@
   // =========================================================================
   const UI_TEXTS = {
     badge: {
-      es: 'Autoevaluación Histórica • 5 Preguntas',
-      en: 'Historical Self-Assessment • 5 Questions'
+      es: 'Autoevaluación Histórica • 8 Preguntas',
+      en: 'Historical Self-Assessment • 8 Questions'
     },
     mainTitle: {
       es: 'Cuestionario Histórico: El Legado del Toro',
       en: 'Historical Quiz: El Legado del Toro'
     },
     introLead: {
-      es: 'Ponga a prueba sus conocimientos sobre las transformaciones jurídicas, estéticas y sociales de la tauromaquia a través de cinco preguntas extraídas de las fuentes primarias de nuestra cronología y mapa.',
-      en: 'Test your understanding of the legal, aesthetic, and social transformations of tauromaquia through five questions derived from our primary sources and historical map.'
+      es: 'Ponga a prueba sus conocimientos sobre las transformaciones jurídicas, estéticas y sociales de la tauromaquia a través de ocho preguntas extraídas de las fuentes primarias de nuestra cronología y mapa.',
+      en: 'Test your understanding of the legal, aesthetic, and social transformations of tauromaquia through eight questions derived from our primary sources and historical map.'
     },
     introTopicsHeading: {
       es: 'Ejes temáticos evaluados:',
@@ -243,29 +351,44 @@
     },
     topics: [
       {
+        icon: '⚔️',
+        es: 'Q1: Origen medieval: adiestramiento militar y ecuestre de los caballeros.',
+        en: 'Q1: Medieval origins: military and equestrian training for knights.'
+      },
+      {
         icon: '⚖️',
-        es: 'La infamia legal del toreo remunerado en Las Siete Partidas de Alfonso X.',
-        en: 'Legal infamy of commercial fighting in Alfonso X’s Las Siete Partidas.'
+        es: 'Q2: Las Siete Partidas (1265): infamia procesal por lidia remunerada.',
+        en: 'Q2: Las Siete Partidas (1265): legal infamy for commercial fighting.'
+      },
+      {
+        icon: '⛪',
+        es: 'Q3: De Salute Gregis (1567): bula de Pío V y amenaza de excomunión.',
+        en: 'Q3: De Salute Gregis (1567): Pope Pius V’s bull and excommunication threat.'
       },
       {
         icon: '🏛️',
-        es: 'La transición borbónica del rejoneo aristocrático al toreo a pie en Ronda.',
-        en: 'The Bourbon shift from aristocratic mounted spearing to foot lidia in Ronda.'
+        es: 'Q4: Siglo XVIII: transición del toreo ecuestre nobiliario a la lidia profesional a pie.',
+        en: 'Q4: 18th century: transition from noble mounted jousts to professional foot lidia.'
       },
       {
         icon: '🎭',
-        es: 'La revolución estética de Juan Belmonte: quietud, temple y terrenos.',
-        en: 'Juan Belmonte’s aesthetic revolution: stillness, rhythm, and ground.'
+        es: 'Q5: Juan Belmonte (1914): el canon de «parar, templar y mandar».',
+        en: 'Q5: Juan Belmonte (1914): the canon of «parar, templar y mandar».'
       },
       {
-        icon: '📜',
-        es: 'El debate parlamentario catalán de 2010 y la ILP ciudadana «Prou!».',
-        en: 'The 2010 Catalan parliamentary debate and the «Prou!» citizen initiative.'
+        icon: '🥀',
+        es: 'Q6: Tragedia de 1920: muerte de Joselito «El Gallo» en Talavera de la Reina.',
+        en: 'Q6: 1920 Tragedy: death of Joselito “El Gallo” in Talavera de la Reina.'
       },
       {
-        icon: '🏛️',
-        es: 'El conflicto competencial: Ley 18/2013 y Sentencia del Tribunal Constitucional STC 177/2016.',
-        en: 'Jurisdictional conflict: State Law 18/2013 and Constitutional Judgment STC 177/2016.'
+        icon: '🗳️',
+        es: 'Q7: Cataluña 2010: iniciativa ciudadana (ILP) y prohibición regional.',
+        en: 'Q7: Catalonia 2010: citizen initiative (ILP) and regional ban.'
+      },
+      {
+        icon: '⚖️',
+        es: 'Q8: Tribunal Constitucional (STC 177/2016): anulación de la prohibición absoluta.',
+        en: 'Q8: Constitutional Court (STC 177/2016): overturning the blanket regional ban.'
       }
     ],
     btnStart: {
@@ -318,14 +441,14 @@
     },
     performanceTiers: [
       {
-        minScore: 5,
+        minScore: 7,
         badgeEs: '🏆 Dominio Historiográfico Sobresaliente',
         badgeEn: '🏆 Outstanding Historical Mastery',
         msgEs: '¡Magno rigor! Demuestras una comprensión profunda y exhaustiva del marco legal, la evolución estética y los complejos debates constitucionales de la tauromaquia.',
         msgEn: 'Exceptional rigor! You demonstrate a profound and exhaustive grasp of the legal framework, aesthetic evolution, and complex constitutional debates of tauromaquia.'
       },
       {
-        minScore: 3,
+        minScore: 4,
         badgeEs: '🎖️ Conocimiento Histórico Sólido',
         badgeEn: '🎖️ Solid Historical Understanding',
         msgEs: '¡Muy buen trabajo! Has asimilado los principales hitos y controversias documentadas en la revista, distinguiendo con claridad las fuentes históricas.',
@@ -423,8 +546,8 @@
 
         <div class="hist-quiz-intro-footer">
           <div class="hist-quiz-intro-meta" aria-hidden="true">
-            <span class="hist-quiz-meta-pill">⏱️ ~3 min</span>
-            <span class="hist-quiz-meta-pill">🎯 5 ${isEn ? 'Milestones' : 'Hitos'}</span>
+            <span class="hist-quiz-meta-pill">⏱️ ~4 min</span>
+            <span class="hist-quiz-meta-pill">🎯 ${QUIZ_QUESTIONS.length} ${isEn ? 'Inquiries' : 'Preguntas'}</span>
             <span class="hist-quiz-meta-pill">🏛️ ${isEn ? 'Primary Sources' : 'Fuentes BOE / BNE'}</span>
           </div>
 
@@ -486,7 +609,7 @@
             <div class="hist-quiz-progress-bar-fill"></div>
           </div>
 
-          <!-- Indicadores circulares (5 dots) -->
+          <!-- Indicadores circulares (8 dots) -->
           <div class="hist-quiz-dots-wrap" aria-hidden="true">
             ${QUIZ_QUESTIONS.map((item, idx) => {
               let dotClass = '';
@@ -814,7 +937,7 @@
   function startQuiz() {
     currentView = 'play';
     currentQuestionIndex = 0;
-    userAnswers = [null, null, null, null, null];
+    userAnswers = new Array(QUIZ_QUESTIONS.length).fill(null);
     isAnswerLocked = false;
     renderQuiz();
 
@@ -867,7 +990,7 @@
   function resetQuiz() {
     currentView = 'intro';
     currentQuestionIndex = 0;
-    userAnswers = [null, null, null, null, null];
+    userAnswers = new Array(QUIZ_QUESTIONS.length).fill(null);
     isAnswerLocked = false;
     renderQuiz();
 

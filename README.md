@@ -7,7 +7,7 @@ Una revista digital interactiva en español dedicada al análisis multidisciplin
 
 ## 🏛️ Estructura del Proyecto y Equipo
 
-El proyecto se compone de 5 secciones principales y páginas de apoyo transversales:
+El proyecto se compone de 5 secciones principales:
 
 | Sección | Título | Responsable | Funcionalidad Interactiva | Ruta |
 | :--- | :--- | :--- | :--- | :--- |
@@ -16,8 +16,6 @@ El proyecto se compone de 5 secciones principales y páginas de apoyo transversa
 | **Sección 3** | **La Cultura** | [Name] | Cuestionario interactivo | `sections/cultura/index.html` |
 | **Sección 4** | **La Controversia** | [Name] | Encuesta y sondeo de opinión | `sections/controversia/index.html` |
 | **Sección 5** | **El Futuro** | [Name] | Simulación interactiva | `sections/futuro/index.html` |
-| **Apoyo** | **Glosario** | Equipo | Términos y vocabulario taurino | `glossary.html` |
-| **Apoyo** | **Fuentes** | Equipo | Bibliografía y fuentes documentales | `sources.html` |
 
 ---
 
@@ -26,8 +24,6 @@ El proyecto se compone de 5 secciones principales y páginas de apoyo transversa
 ```text
 El-Legado-del-Toro/
 ├── index.html                   # Portada interactiva de la revista
-├── glossary.html                # Glosario general de términos
-├── sources.html                 # Registro general de fuentes
 ├── README.md                    # Documentación del proyecto
 ├── css/
 │   └── shared.css               # Sistema de diseño compartido (paleta, fuentes, base, tarjetas)

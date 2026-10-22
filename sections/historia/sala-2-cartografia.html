@@ -8,12 +8,12 @@
 
   <!-- Estilos compartidos del proyecto y específicos de historia -->
   <link rel="stylesheet" href="../../css/shared.css">
-  <link rel="stylesheet" href="style.css?v=20261018e">
+  <link rel="stylesheet" href="style.css?v=20261022_clean_dossier">
 
   <!-- Scripts: Navegación compartida, motor cartográfico y controlador de Sala II -->
-  <script src="../../js/nav.js?v=2" defer></script>
-  <script src="map.js?v=20261018e" defer></script>
-  <script src="sala-2.js?v=20261018e" defer></script>
+  <script src="../../js/nav.js?v=20261022_v3" defer></script>
+  <script src="map.js?v=20261022_clean_dossier" defer></script>
+  <script src="sala-2.js?v=20261022_clean_dossier" defer></script>
 </head>
 <body>
 
@@ -88,6 +88,51 @@
               </div>
             </div>
 
+            <!-- Tutorial interactivo de exploración de sedes (Tema Claro / Light Theme) -->
+            <aside id="hist-map-tutorial-guide" 
+                   class="hist-map-tutorial-guide" 
+                   role="status" 
+                   aria-live="polite" 
+                   aria-label="Guía interactiva del mapa" 
+                   aria-hidden="true">
+              <div class="hist-map-tutorial-card">
+                <div class="hist-map-tutorial-header">
+                  <div class="hist-map-tutorial-badge">
+                    <span class="hist-map-tutorial-icon" aria-hidden="true">🗺️</span>
+                    <span class="hist-lang-es">GUÍA INTERACTIVA</span>
+                    <span class="hist-lang-en" style="display:none;">INTERACTIVE GUIDE</span>
+                  </div>
+                  <button type="button" 
+                          class="hist-map-tutorial-close" 
+                          id="hist-map-tutorial-close" 
+                          aria-label="Cerrar sugerencia de exploración" 
+                          title="Cerrar sugerencia">
+                    <span aria-hidden="true">✕</span>
+                  </button>
+                </div>
+
+                <div class="hist-map-tutorial-body">
+                  <p class="hist-map-tutorial-text hist-lang-es">
+                    <strong>Pulsa sobre los lugares señalados en el mapa</strong> (Ronda, Sevilla, Madrid, Talavera...) para abrir sus cédulas históricas y archivos documentales.
+                  </p>
+                  <p class="hist-map-tutorial-text hist-lang-en" style="display:none;">
+                    <strong>Click on any marked location on the map</strong> (Ronda, Seville, Madrid, Talavera...) to open its historical dossier and archival documents.
+                  </p>
+                </div>
+
+                <div class="hist-map-tutorial-footer">
+                  <button type="button" 
+                          class="hist-map-tutorial-btn-confirm" 
+                          id="hist-map-tutorial-btn-confirm"
+                          aria-label="Entendido, explorar mapa">
+                    <span class="hist-lang-es">Entendido • Explorar</span>
+                    <span class="hist-lang-en" style="display:none;">Got it • Explore</span>
+                    <span aria-hidden="true">📍</span>
+                  </button>
+                </div>
+              </div>
+            </aside>
+
             <div class="hist-map-viewport" id="hist-map-viewport" role="region" aria-label="Mapa cartográfico interactivo de España">
               <!-- SVG Cartográfico Inyectado Dinámicamente por map.js -->
             </div>
@@ -112,21 +157,6 @@
               <span class="hist-attr-en" style="display:none;">Base cartography: <a href="https://www.naturalearthdata.com" target="_blank" rel="noopener noreferrer">Natural Earth</a> (Public Domain 1:50m) • Local conformal projection.</span>
             </div>
           </div>
-
-          <!-- Directorio Accesible de Sedes (Accessible Sidebar / Cards) -->
-          <aside class="hist-map-sidebar" id="hist-map-sidebar" aria-label="Directorio accesible de sedes históricas">
-            <div class="hist-sidebar-header">
-              <h3 class="hist-sidebar-title">
-                <span class="hist-sidebar-title-es">Directorio de Sedes Históricas</span>
-                <span class="hist-sidebar-title-en" style="display:none;">Historical Locations Directory</span>
-              </h3>
-              <span class="hist-sidebar-count" id="hist-sidebar-count">7 sedes</span>
-            </div>
-
-            <div class="hist-locations-list" id="hist-locations-list" role="list">
-              <!-- Tarjetas de sedes generadas dinámicamente por map.js -->
-            </div>
-          </aside>
 
         </div>
 
