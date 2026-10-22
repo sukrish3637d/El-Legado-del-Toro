@@ -11,11 +11,11 @@ El proyecto se compone de 5 secciones principales:
 
 | Sección | Título | Responsable | Funcionalidad Interactiva | Ruta |
 | :--- | :--- | :--- | :--- | :--- |
-| **Sección 1** | **La Historia** | Sukrish | Línea de tiempo interactiva | `sections/historia/index.html` |
-| **Sección 2** | **El Arte** | [Name] | Galería visual interactiva | `sections/arte/index.html` |
-| **Sección 3** | **La Cultura** | [Name] | Cuestionario interactivo | `sections/cultura/index.html` |
-| **Sección 4** | **La Controversia** | [Name] | Encuesta y sondeo de opinión | `sections/controversia/index.html` |
-| **Sección 5** | **El Futuro** | [Name] | Simulación interactiva | `sections/futuro/index.html` |
+| **Sección 1** | **La Historia** | Sukrish (25BDS1058) | Línea de tiempo interactiva | `sections/historia/index.html` |
+| **Sección 2** | **El Arte** | Krishna Mishra (25BDS1135) | Galería visual interactiva | `sections/arte/index.html` |
+| **Sección 3** | **La Cultura** | Abhishek Kumar (25BDS1018) | Cuestionario interactivo | `sections/cultura/index.html` |
+| **Sección 4** | **La Controversia** | Saurabh Raj (25BDS1005) | Encuesta y sondeo de opinión | `sections/controversia/index.html` |
+| **Sección 5** | **El Futuro** | Durgesh Tomar (25BDS1030) | Simulación interactiva | `sections/futuro/index.html` |
 
 ---
 
@@ -31,19 +31,19 @@ El-Legado-del-Toro/
 │   ├── nav.js                   # Barra de navegación responsiva dinámica
 │   └── home.js                  # Configuración de miembros (array) y renderizado de la portada
 └── sections/
-    ├── historia/                # Sección 1: La Historia (Sukrish)
+    ├── historia/                # Sección 1: La Historia (Sukrish - 25BDS1058)
     │   ├── index.html
     │   ├── style.css
     │   ├── script.js
     │   └── images/
-    ├── arte/                    # Sección 2: El Arte
-    │   └── index.html           # Página "En construcción" (sustituible por el responsable)
-    ├── cultura/                 # Sección 3: La Cultura
-    │   └── index.html           # Página "En construcción" (sustituible por el responsable)
-    ├── controversia/            # Sección 4: La Controversia
-    │   └── index.html           # Página "En construcción" (sustituible por el responsable)
-    └── futuro/                  # Sección 5: El Futuro
-        └── index.html           # Página "En construcción" (sustituible por el responsable)
+    ├── arte/                    # Sección 2: El Arte (Krishna Mishra - 25BDS1135)
+    │   └── index.html
+    ├── cultura/                 # Sección 3: La Cultura (Abhishek Kumar - 25BDS1018)
+    │   └── index.html
+    ├── controversia/            # Sección 4: La Controversia (Saurabh Raj - 25BDS1005)
+    │   └── index.html
+    └── futuro/                  # Sección 5: El Futuro (Durgesh Tomar - 25BDS1030)
+        └── index.html
 ```
 
 ---
