@@ -77,6 +77,18 @@
   }
 
   /**
+   * Actualiza todos los enlaces de "Finalizar el Viaje" para preservar el idioma hacia la portada principal.
+   * Formato: ../../index.html?lang=es o ../../index.html?lang=en
+   * @param {'es' | 'en'} lang
+   */
+  function updateEndJourneyLinks(lang) {
+    var endJourneyLinks = document.querySelectorAll('.hist-btn-end-journey');
+    endJourneyLinks.forEach(function (link) {
+      link.setAttribute('href', '../../index.html?lang=' + encodeURIComponent(lang));
+    });
+  }
+
+  /**
    * Actualiza todos los enlaces cross-room a las Salas I, II, III y IV preservando el idioma activo.
    * @param {'es' | 'en'} lang
    */
@@ -198,6 +210,7 @@
     });
 
     updateReturnLinks(currentLang);
+    updateEndJourneyLinks(currentLang);
     updateCrossRoomLinks(currentLang);
     updateNavLinks(currentLang);
   }
@@ -241,6 +254,14 @@
 
     // Delegación accesible para botones y enlaces de retorno y navegación cross-room
     document.addEventListener('click', function (e) {
+      // 0. Botón de Finalizar el Viaje -> Aterrizar directamente en la portada principal
+      var endJourneyBtn = e.target.closest('.hist-btn-end-journey');
+      if (endJourneyBtn) {
+        e.preventDefault();
+        window.location.href = '../../index.html?lang=' + encodeURIComponent(currentLang);
+        return;
+      }
+
       // 1. Botones de retorno al Gran Vestíbulo Central
       var returnBtn = e.target.closest('.hist-btn-room-return-hall');
       if (returnBtn) {

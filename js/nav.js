@@ -38,7 +38,7 @@
 
   /**
    * Estructura de enlaces del sitio:
-   * Inicio, 5 secciones (historia, arte, cultura, controversia, futuro), glosario y fuentes.
+   * Inicio y 5 secciones (historia, arte, cultura, controversia, futuro).
    */
   const NAV_ITEMS = [
     { label: 'Inicio', path: 'index.html', key: 'index' },
@@ -46,9 +46,7 @@
     { label: 'Arte', path: 'sections/arte/index.html', key: 'arte' },
     { label: 'Cultura', path: 'sections/cultura/index.html', key: 'cultura' },
     { label: 'Controversia', path: 'sections/controversia/index.html', key: 'controversia' },
-    { label: 'Futuro', path: 'sections/futuro/index.html', key: 'futuro' },
-    { label: 'Glosario', path: 'glossary.html', key: 'glossary' },
-    { label: 'Fuentes', path: 'sources.html', key: 'sources' }
+    { label: 'Futuro', path: 'sections/futuro/index.html', key: 'futuro' }
   ];
 
   /**

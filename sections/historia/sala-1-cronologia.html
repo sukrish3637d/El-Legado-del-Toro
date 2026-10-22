@@ -8,16 +8,16 @@
 
   <!-- Estilos compartidos del proyecto y específicos de historia -->
   <link rel="stylesheet" href="../../css/shared.css">
-  <link rel="stylesheet" href="style.css?v=20261018c">
+  <link rel="stylesheet" href="style.css?v=20261022_vestibulo_guide">
 
   <!-- Preload de las imágenes iniciales de la cronología cinemática -->
   <link rel="preload" as="image" href="assets/timeline/01-origenes-siglo-xi.png">
   <link rel="preload" as="image" href="assets/timeline/02-siete-partidas-alfonso-x.png">
 
   <!-- Scripts: Navegación compartida, motor de cronología cinemática y controlador de Sala I -->
-  <script src="../../js/nav.js?v=2" defer></script>
-  <script src="journey.js?v=2" defer></script>
-  <script src="sala-1.js?v=2" defer></script>
+  <script src="../../js/nav.js?v=20261022_v3" defer></script>
+  <script src="journey.js?v=20261022_vestibulo_guide" defer></script>
+  <script src="sala-1.js?v=20261022_vestibulo_guide" defer></script>
 </head>
 <body>
 
@@ -65,46 +65,6 @@
         </div>
       </div>
     </div>
-
-    <!-- ===================================================================
-         MENÚ FIJO DE NAVEGACIÓN POR ÉPOCAS (STICKY ERA NAV - SALA I)
-         =================================================================== -->
-    <nav id="hist-era-nav" class="hist-era-nav" aria-label="Navegación por épocas del toreo">
-      <div class="site-container hist-era-nav-inner">
-        <span class="hist-era-nav-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          <span class="hist-lang-es">Viaje en el tiempo</span>
-          <span class="hist-lang-en" style="display:none;">Time Travel</span>
-        </span>
-        <div class="hist-era-pills">
-          <a href="#hist-era-origenes" class="hist-era-link hist-active" data-era="Orígenes">
-            <span class="hist-lang-es">1. Orígenes</span>
-            <span class="hist-lang-en" style="display:none;">1. Origins</span>
-          </a>
-          <a href="#hist-era-nobleza" class="hist-era-link" data-era="Nobleza y prohibiciones">
-            <span class="hist-lang-es">2. Nobleza</span>
-            <span class="hist-lang-en" style="display:none;">2. Nobility</span>
-          </a>
-          <a href="#hist-era-toreo-pie" class="hist-era-link" data-era="El toreo a pie">
-            <span class="hist-lang-es">3. Toreo a pie</span>
-            <span class="hist-lang-en" style="display:none;">3. Toreo on foot</span>
-          </a>
-          <a href="#hist-era-edad-oro" class="hist-era-link" data-era="Edad de Oro">
-            <span class="hist-lang-es">4. Edad de Oro</span>
-            <span class="hist-lang-en" style="display:none;">4. Golden Age</span>
-          </a>
-          <a href="#hist-era-leyes-debate" class="hist-era-link" data-era="Leyes y debate">
-            <span class="hist-lang-es">5. Leyes y debate</span>
-            <span class="hist-lang-en" style="display:none;">5. Laws &amp; Debate</span>
-          </a>
-        </div>
-        <a href="index.html?lang=es#hall" class="hist-btn-room-return-hall" aria-label="Volver al Gran Vestíbulo Central del Museo">
-          <span class="hist-return-icon" aria-hidden="true">🏛️</span>
-          <span class="hist-lang-es">Vestíbulo</span>
-          <span class="hist-lang-en" style="display:none;">Central Hall</span>
-        </a>
-      </div>
-    </nav>
 
     <!-- Contador de fecha / año lateral adhesivo (Sticky HUD) -->
     <aside id="hist-year-counter" class="hist-year-counter" aria-live="polite" aria-atomic="true" aria-label="Fecha actual del recorrido">

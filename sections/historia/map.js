@@ -669,18 +669,6 @@
             ` : ''}
 
             <div class="hist-dossier-actions">
-              <button type="button" class="hist-btn-jump-timeline" id="hist-btn-jump-timeline" data-event-index="${loc.timelineEventIndex}">
-                <span aria-hidden="true">🎯</span>
-                <span class="hist-jump-btn-es"${isEn ? ' style="display:none;"' : ''}>Saltar al Hito ${loc.timelineEventIndex + 1} en Sala I</span>
-                <span class="hist-jump-btn-en"${isEn ? '' : ' style="display:none;"'}>Jump to Milestone ${loc.timelineEventIndex + 1} in Sala I</span>
-              </button>
-
-              <button type="button" class="hist-btn-open-exhibit" id="hist-btn-open-exhibit" data-event-index="${loc.timelineEventIndex}">
-                <span aria-hidden="true">📜</span>
-                <span class="hist-exhibit-btn-es"${isEn ? ' style="display:none;"' : ''}>Abrir Cédula Documental</span>
-                <span class="hist-exhibit-btn-en"${isEn ? '' : ' style="display:none;"'}>Open Historical Exhibit</span>
-              </button>
-
               <a href="${document.getElementById('hist-journey-container') && !window.isSala2Standalone ? '#hist-museum-exterior' : 'index.html?lang=' + encodeURIComponent(currentLanguage) + '#hall'}" class="hist-btn-room-return-hall hist-dossier-return-btn" aria-label="${isEn ? 'Return to Grand Central Hall' : 'Volver al Gran Vestíbulo Central del Museo'}">
                 <span class="hist-return-icon" aria-hidden="true">🏛️</span>
                 <span>${isEn ? 'Central Hall' : 'Vestíbulo'}</span>
@@ -699,24 +687,6 @@
     const closeBtn = document.getElementById('hist-dossier-close-btn');
     if (closeBtn) {
       closeBtn.addEventListener('click', closeDossier);
-    }
-
-    const jumpBtn = document.getElementById('hist-btn-jump-timeline');
-    if (jumpBtn) {
-      jumpBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const evtIdx = parseInt(jumpBtn.getAttribute('data-event-index'), 10);
-        jumpToTimelineEvent(evtIdx);
-      });
-    }
-
-    const exhibitBtn = document.getElementById('hist-btn-open-exhibit');
-    if (exhibitBtn) {
-      exhibitBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const evtIdx = parseInt(exhibitBtn.getAttribute('data-event-index'), 10);
-        openTimelineExhibit(evtIdx);
-      });
     }
 
     if (closeBtn) {
@@ -810,6 +780,7 @@
       }
     });
 
+    dismissTutorial();
     renderDossier(loc);
   }
 
@@ -850,6 +821,12 @@
       el.style.display = isEn ? 'inline' : 'none';
     });
 
+    const tutorialEl = document.getElementById('hist-map-tutorial-guide');
+    if (tutorialEl) {
+      tutorialEl.querySelectorAll('.hist-lang-es').forEach(el => el.style.display = isEn ? 'none' : '');
+      tutorialEl.querySelectorAll('.hist-lang-en').forEach(el => el.style.display = isEn ? '' : 'none');
+    }
+
     renderSVGMap();
     renderLocationsList();
     if (activeLocationId) {
@@ -868,7 +845,7 @@
     resetBtn = document.getElementById('hist-map-reset-btn');
     filterButtons = Array.from(document.querySelectorAll('.hist-map-filter-btn'));
 
-    if (!mapViewportEl || !locationsListEl) {
+    if (!mapViewportEl) {
       return;
     }
 
@@ -909,6 +886,7 @@
     }
 
     setLanguage(currentLanguage);
+    initMapTutorial();
 
     window.historiaMap = {
       getLocations: () => HISTORICAL_LOCATIONS,
@@ -919,8 +897,67 @@
       setLanguage: setLanguage,
       getLanguage: () => currentLanguage,
       getProjection: () => PROJECTION,
-      getGeoPaths: () => GEO_PATHS
+      getGeoPaths: () => GEO_PATHS,
+      dismissTutorial: dismissTutorial
     };
+  }
+
+  // =========================================================================
+  // 12. 💡 TUTORIAL INTERACTIVO DEL MAPA (TEMA CLARO / PRIMERA VEZ)
+  // =========================================================================
+  let hasShownMapTutorial = false;
+
+  function dismissTutorial() {
+    const tutorialEl = document.getElementById('hist-map-tutorial-guide');
+    if (tutorialEl) {
+      tutorialEl.classList.remove('hist-tutorial-visible');
+      tutorialEl.setAttribute('aria-hidden', 'true');
+    }
+    document.querySelectorAll('.hist-map-marker').forEach(m => m.classList.remove('hist-marker-tutorial-pulse'));
+  }
+
+  function initMapTutorial() {
+    const mapSection = document.getElementById('hist-map-stage') || document.getElementById('hist-map-section');
+    const tutorialEl = document.getElementById('hist-map-tutorial-guide');
+    if (!mapSection || !tutorialEl) return;
+
+    const closeBtn = document.getElementById('hist-map-tutorial-close');
+    const confirmBtn = document.getElementById('hist-map-tutorial-btn-confirm');
+
+    function showTutorial() {
+      if (hasShownMapTutorial || activeLocationId) return;
+      hasShownMapTutorial = true;
+      tutorialEl.classList.add('hist-tutorial-visible');
+      tutorialEl.setAttribute('aria-hidden', 'false');
+      document.querySelectorAll('.hist-map-marker').forEach(m => m.classList.add('hist-marker-tutorial-pulse'));
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', dismissTutorial);
+    if (confirmBtn) confirmBtn.addEventListener('click', dismissTutorial);
+
+    // Ocultar si el usuario pulsa en cualquier marcador o control del mapa
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.hist-map-marker') || e.target.closest('.hist-map-filter-btn') || e.target.closest('.hist-map-reset-btn')) {
+        dismissTutorial();
+      }
+    });
+
+    // Detectar cuando el visitante llega al mapa por scroll (IntersectionObserver)
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !hasShownMapTutorial && !activeLocationId) {
+            setTimeout(showTutorial, 400);
+            observer.disconnect();
+          }
+        });
+      }, {
+        threshold: 0.25
+      });
+      observer.observe(mapSection);
+    } else {
+      setTimeout(showTutorial, 800);
+    }
   }
 
   if (document.readyState === 'loading') {

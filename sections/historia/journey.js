@@ -742,10 +742,7 @@
       title: 'Canarias aprueba la Ley 8/1991 de protección animal',
       captionEs: 'El Parlamento de Canarias promulga la primera normativa autonómica de España que prohíbe la utilización de animales en espectáculos que entrañen crueldad o muerte, excluyendo las corridas del archipiélago.',
       captionEn: 'The Canary Islands Parliament passes Law 8/1991 on animal welfare, becoming the first Spanish territory to forbid blood spectacles, effectively phasing out bullfights across the islands.',
-      source: {
-        label: 'UNED, artículo doctrinal sobre STC 177/2016',
-        url: 'https://revistas.uned.es/index.php/RDUNED/article/download/22285/18215/45854'
-      },
+      source: null,
       image: 'assets/timeline/09-canarias-ley-1991.png',
       exhibit: {
         context: {
@@ -829,8 +826,8 @@
       captionEs: 'Tras la tramitación de una masiva Iniciativa Legislativa Popular impulsada por la plataforma Prou!, el hemiciclo catalán aprueba suprimir las corridas en Cataluña con efectos desde el 1 de enero de 2012.',
       captionEn: 'Following a citizen-led popular initiative with 180,000 signatures, the Catalan Parliament votes to ban bullfighting throughout Catalonia effective January 1, 2012.',
       source: {
-        label: 'UNED / Diario Oficial',
-        url: 'https://revistas.uned.es/index.php/RDUNED/article/download/22285/18215/45854'
+        label: 'BOE, Ley 28/2010 de Cataluña',
+        url: 'https://www.boe.es/eli/es-ct/l/2010/08/03/28'
       },
       image: 'assets/timeline/10-cataluna-abolicion-2010.png',
       exhibit: {
@@ -1173,6 +1170,11 @@
   let eraNavContainer = null;
   let yearCounterElement = null;
 
+  // Guía tutorial de retorno al Vestíbulo (Hito 12)
+  let vestibuloGuideEl = null;
+  let hudReturnBtn = null;
+  let isVestibuloGuideDismissed = false;
+
   // Control de scroll y animación
   let isTicking = false;
   let activeEventIndex = 0;
@@ -1277,14 +1279,16 @@
 
           <div class="hist-card-footer">
             <div class="hist-source-container">
-              <a href="${event.source.url}" class="hist-source-link" target="_blank" rel="noopener noreferrer" title="Consultar fuente original">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                  <polyline points="15 3 21 3 21 9"></polyline>
-                  <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-                <span>Fuente: ${event.source.label}</span>
-              </a>
+              ${event.source && event.source.url ? `
+                <a href="${event.source.url}" class="hist-source-link" target="_blank" rel="noopener noreferrer" title="Consultar fuente original">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                  <span>Fuente: ${event.source.label}</span>
+                </a>
+              ` : ''}
             </div>
 
             <div class="hist-card-actions">
@@ -1399,7 +1403,10 @@
                 </svg>
                 Desplaza
               </span>
-              <a href="#hist-museum-exterior" class="hist-btn-room-return-hall hist-hud-return-btn" aria-label="Volver al Gran Vestíbulo Central del Museo">
+              <a href="index.html?lang=${exhibitLanguage}#hall" 
+                 class="hist-btn-room-return-hall hist-hud-return-btn" 
+                 id="hist-hud-return-vestibulo" 
+                 aria-label="Volver al Gran Vestíbulo Central del Museo">
                 <span class="hist-return-icon" aria-hidden="true">🏛️</span>
                 <span class="hist-lang-es">Vestíbulo</span>
                 <span class="hist-lang-en" style="display:none;">Central Hall</span>
@@ -1407,6 +1414,58 @@
             </div>
           </div>
         </header>
+
+        <!-- Tutorial de Navegación: Guía de Retorno al Vestíbulo (Hito 12) -->
+        <aside id="hist-vestibulo-guide" 
+               class="hist-vestibulo-guide" 
+               role="complementary" 
+               aria-label="Guía de navegación del museo" 
+               aria-hidden="true">
+          <div class="hist-guide-pointer" aria-hidden="true"></div>
+          <div class="hist-guide-inner">
+            <div class="hist-guide-header">
+              <div class="hist-guide-badge">
+                <span class="hist-guide-icon" aria-hidden="true">🏛️</span>
+                <span class="hist-guide-badge-title hist-lang-es">GUÍA DEL MUSEO</span>
+                <span class="hist-guide-badge-title hist-lang-en" style="display:none;">MUSEUM GUIDE</span>
+              </div>
+              <button type="button" 
+                      class="hist-guide-close-btn" 
+                      id="hist-guide-close-btn" 
+                      aria-label="Cerrar sugerencia de navegación" 
+                      title="Cerrar sugerencia">
+                <span aria-hidden="true">✕</span>
+              </button>
+            </div>
+
+            <div class="hist-guide-content">
+              <p class="hist-guide-text hist-lang-es">
+                Has alcanzado el <strong>Hito 12 / 12</strong> (final de la cronología). Si deseas regresar al inicio o explorar otras salas, pulsa en <strong>Vestíbulo</strong>.
+              </p>
+              <p class="hist-guide-text hist-lang-en" style="display:none;">
+                You have reached <strong>Milestone 12 / 12</strong> (end of the timeline). If you wish to return to the start or explore other galleries, click on <strong>Vestíbulo</strong>.
+              </p>
+            </div>
+
+            <div class="hist-guide-actions">
+              <a href="index.html?lang=${exhibitLanguage}#hall" 
+                 class="hist-btn-room-return-hall hist-guide-btn-action" 
+                 id="hist-guide-action-return" 
+                 aria-label="Volver al Gran Vestíbulo Central">
+                <span class="hist-return-icon" aria-hidden="true">🏛️</span>
+                <span class="hist-lang-es">Ir al Vestíbulo</span>
+                <span class="hist-lang-en" style="display:none;">Go to Vestíbulo</span>
+              </a>
+              <button type="button" 
+                      class="hist-guide-btn-dismiss" 
+                      id="hist-guide-btn-dismiss" 
+                      aria-label="Permanecer en la página actual">
+                <span class="hist-lang-es">Permanecer aquí</span>
+                <span class="hist-lang-en" style="display:none;">Stay here</span>
+              </button>
+            </div>
+          </div>
+        </aside>
 
         <!-- Lienzo central con tarjetas -->
         <div class="hist-stage-canvas" id="hist-stage-canvas">
@@ -1580,6 +1639,10 @@
     exhibitPrevBtn = document.getElementById('hist-exhibit-prev-btn');
     exhibitNextBtn = document.getElementById('hist-exhibit-next-btn');
     exhibitNavCount = document.getElementById('hist-exhibit-nav-count');
+
+    // Referencias de Guía Tutorial al Vestíbulo (Hito 12)
+    vestibuloGuideEl = document.getElementById('hist-vestibulo-guide');
+    hudReturnBtn = document.getElementById('hist-hud-return-vestibulo');
 
     updateContainerHeight();
   }
@@ -1777,12 +1840,87 @@
       const parallaxY = (state.progress - 0.5) * 28;
       cinemaStageElement.style.transform = `translate3d(0, ${parallaxY.toFixed(1)}px, 0)`;
     }
+
+    // 8. Guía tutorial de retorno al Vestíbulo al alcanzar el Hito 12 (último evento)
+    if (activeEventIndex === events.length - 1 && !isExhibitOpen) {
+      if (!isVestibuloGuideDismissed) {
+        showVestibuloGuide();
+      }
+    } else {
+      hideVestibuloGuide();
+    }
+  }
+
+  /**
+   * Muestra de forma translúcida y no intrusiva el tutorial de retorno al Vestíbulo.
+   */
+  function showVestibuloGuide() {
+    if (isVestibuloGuideDismissed || !vestibuloGuideEl) return;
+    vestibuloGuideEl.classList.add('hist-guide-visible');
+    vestibuloGuideEl.setAttribute('aria-hidden', 'false');
+    if (hudReturnBtn) {
+      hudReturnBtn.classList.add('hist-hud-btn-highlight');
+    }
+  }
+
+  /**
+   * Oculta el tutorial de retorno al Vestíbulo.
+   */
+  function hideVestibuloGuide() {
+    if (!vestibuloGuideEl) return;
+    vestibuloGuideEl.classList.remove('hist-guide-visible');
+    vestibuloGuideEl.setAttribute('aria-hidden', 'true');
+    if (hudReturnBtn) {
+      hudReturnBtn.classList.remove('hist-hud-btn-highlight');
+    }
+  }
+
+  /**
+   * Inicializa los controles del tutorial de retorno al Vestíbulo.
+   */
+  function initVestibuloGuideControls() {
+    if (!vestibuloGuideEl) return;
+
+    const closeBtn = document.getElementById('hist-guide-close-btn');
+    const dismissBtn = document.getElementById('hist-guide-btn-dismiss');
+
+    function dismissGuide(e) {
+      if (e) e.preventDefault();
+      isVestibuloGuideDismissed = true;
+      hideVestibuloGuide();
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', dismissGuide);
+    if (dismissBtn) dismissBtn.addEventListener('click', dismissGuide);
+  }
+
+  /**
+   * Sincroniza el idioma en la guía tutorial del Vestíbulo.
+   * @param {'es' | 'en'} targetLang
+   */
+  function syncVestibuloGuideLanguage(targetLang) {
+    if (!vestibuloGuideEl) return;
+    const esEls = vestibuloGuideEl.querySelectorAll('.hist-lang-es');
+    const enEls = vestibuloGuideEl.querySelectorAll('.hist-lang-en');
+    esEls.forEach(el => el.style.display = targetLang === 'es' ? '' : 'none');
+    enEls.forEach(el => el.style.display = targetLang === 'en' ? '' : 'none');
+    const actionReturn = document.getElementById('hist-guide-action-return');
+    if (actionReturn) {
+      actionReturn.setAttribute('href', 'index.html?lang=' + encodeURIComponent(targetLang) + '#hall');
+    }
+    if (hudReturnBtn) {
+      hudReturnBtn.setAttribute('href', 'index.html?lang=' + encodeURIComponent(targetLang) + '#hall');
+    }
   }
 
   /**
    * Manejador de evento scroll regulado con requestAnimationFrame.
    */
   function onScroll() {
+    // Si la cédula histórica (modal) está abierta, congelar la animación del stage de fondo
+    if (isExhibitOpen) {
+      return;
+    }
     if (!isTicking) {
       isTicking = true;
       requestAnimationFrame(function () {
@@ -2091,9 +2229,19 @@
     scrollToEvent(index);
     renderExhibitContent(index);
 
+    // Bloquear scroll de la página de fondo
+    document.documentElement.classList.add('hist-modal-open');
+    document.body.classList.add('hist-modal-open');
+
     exhibitModal.classList.add('hist-exhibit-active');
     exhibitModal.setAttribute('aria-hidden', 'false');
     isExhibitOpen = true;
+
+    // Reiniciar posición de scroll del cuerpo del modal
+    const exhibitBody = document.getElementById('hist-exhibit-body');
+    if (exhibitBody) {
+      exhibitBody.scrollTop = 0;
+    }
 
     if (exhibitCloseBtn) {
       setTimeout(() => exhibitCloseBtn.focus(), 60);
@@ -2115,12 +2263,21 @@
     exhibitModal.setAttribute('aria-hidden', 'true');
     isExhibitOpen = false;
 
+    // Restaurar scroll de la página principal
+    document.documentElement.classList.remove('hist-modal-open');
+    document.body.classList.remove('hist-modal-open');
+
     document.querySelectorAll('.hist-btn-exhibit').forEach(btn => {
       btn.setAttribute('aria-expanded', 'false');
     });
 
     if (lastFocusedTriggerBtn && typeof lastFocusedTriggerBtn.focus === 'function') {
       lastFocusedTriggerBtn.focus();
+    }
+
+    // Restaurar visibilidad del tutorial en Hito 12 si no fue descartado
+    if (activeEventIndex === events.length - 1 && !isVestibuloGuideDismissed) {
+      showVestibuloGuide();
     }
   }
 
@@ -2141,6 +2298,8 @@
         toggleCardTranslation(card, false);
       }
     });
+
+    syncVestibuloGuideLanguage(exhibitLanguage);
   }
 
   /**
@@ -2217,12 +2376,30 @@
       }
     });
 
-    // Evitar que el scroll dentro del diálogo mueva el scroll global del stage
-    const exhibitBody = document.getElementById('hist-exhibit-body');
-    if (exhibitBody) {
-      exhibitBody.addEventListener('wheel', function (e) {
-        e.stopPropagation();
-      }, { passive: true });
+    // Aislamiento completo de scroll para que no afecte a la ventana/página principal
+    if (exhibitModal) {
+      exhibitModal.addEventListener('wheel', function (e) {
+        const scrollBody = e.target.closest('.hist-exhibit-body');
+        if (!scrollBody) {
+          // Si el cursor está en el fondo, cabecera o bordes, impedir que la rueda mueva la página
+          e.preventDefault();
+          return;
+        }
+
+        // Si está en el cuerpo scrollable, contener el scroll en los límites superior e inferior
+        const atTop = scrollBody.scrollTop <= 0 && e.deltaY < 0;
+        const atBottom = (scrollBody.scrollTop + scrollBody.clientHeight >= scrollBody.scrollHeight - 1) && e.deltaY > 0;
+        if (atTop || atBottom) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Evitar arrastre de página en dispositivos móviles fuera del área de lectura
+      exhibitModal.addEventListener('touchmove', function (e) {
+        if (!e.target.closest('.hist-exhibit-body')) {
+          e.preventDefault();
+        }
+      }, { passive: false });
     }
   }
 
@@ -2263,7 +2440,7 @@
           if (activeEventIndex < events.length - 1) {
             scrollToEvent(activeEventIndex + 1);
           } else {
-            const quizSection = document.getElementById('hist-quiz-section');
+            const quizSection = document.getElementById('hist-quiz-section') || document.getElementById('site-footer');
             if (quizSection) quizSection.scrollIntoView({ behavior: 'smooth' });
           }
         } else {
@@ -2319,7 +2496,7 @@
         if (nextIndex < events.length) {
           scrollToEvent(nextIndex);
         } else {
-          const quizSection = document.getElementById('hist-quiz-section');
+          const quizSection = document.getElementById('hist-quiz-section') || document.getElementById('site-footer');
           if (quizSection) {
             quizSection.scrollIntoView({ behavior: 'smooth' });
           }
@@ -2434,7 +2611,7 @@
           if (activeEventIndex < events.length - 1) {
             scrollToEvent(activeEventIndex + 1);
           } else {
-            const quizSection = document.getElementById('hist-quiz-section');
+            const quizSection = document.getElementById('hist-quiz-section') || document.getElementById('site-footer');
             if (quizSection) quizSection.scrollIntoView({ behavior: 'smooth' });
           }
         } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
@@ -2562,6 +2739,8 @@
     renderPinnedStage();
     initNavigationControls();
     initExhibitControls();
+    initVestibuloGuideControls();
+    syncVestibuloGuideLanguage(exhibitLanguage);
     initTouchSwipeNavigation();
     initKeyboardNavigation();
     initVocabTooltips();
