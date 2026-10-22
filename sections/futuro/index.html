@@ -10,7 +10,7 @@
 <link href="../../css/shared.css" rel="stylesheet"/>
 <link href="style.css" rel="stylesheet"/>
 <!-- Scripts: Navegación compartida del proyecto y lógica interactiva de la sección -->
-<script defer="" src="../../js/nav.js?v=20261022_v3"></script>
+<script defer="" src="../../js/nav.js"></script>
 <script defer="" src="script.js"></script>
 </head>
 <body class="futuro-body">
@@ -33,7 +33,7 @@
 <div class="byline-container">
 <div aria-hidden="true" class="byline-avatar">F</div>
 <div class="byline-info">
-<span class="byline-author" id="futuro-author-name">Por DURGESH TOMAR (25BDS1030), Sección 5: El Futuro</span>
+<span class="byline-author" id="futuro-author-name">Por DURGESH TOMAR, Sección 5: El Futuro</span>
 <span class="byline-role">El futuro y una actividad interactiva</span>
 </div>
 </div>
@@ -71,28 +71,155 @@
 </div>
 </header>
 <!-- ===================================================================
-           PARTE 2: CINCO DECISIONES INTERACTIVAS (SIMULADOR PROSPECTIVO)
+           PARTE 2: EXPERIENCIA INMERSIVA DE VIAJE EN EL TIEMPO AL AÑO 2050
            =================================================================== -->
 <section aria-labelledby="futuro-simulador-title" class="futuro-simulator-section" id="futuro-simulador">
 <div class="futuro-section-header">
-<span class="badge badge-gold">Hechos y fuentes</span>
-<h2 class="futuro-section-title" id="futuro-simulador-title">Cinco preguntas sobre el futuro</h2>
-<p class="futuro-section-desc">Hechos sobre las leyes, los edificios y la cultura. También vemos qué podría pasar en el futuro.</p>
+<span class="badge badge-gold">Simulación Prospectiva</span>
+<h2 class="futuro-section-title" id="futuro-simulador-title">Viaje en el Tiempo al Año 2050</h2>
+<p class="futuro-section-desc">Un recorrido cinematográfico por cinco etapas temporales para explorar el porvenir de la tradición taurina.</p>
 </div>
 <!-- Región accesible para anuncios en lectores de pantalla -->
 <div aria-atomic="true" aria-live="polite" class="futuro-sr-only" id="futuro-sr-announcer"></div>
-<!-- Marco del simulador -->
-<div class="futuro-simulator-card card" id="futuro-simulator-card">
+
+<!-- 1. PANTALLA DE SALIDA: PREPARACIÓN PARA EL VIAJE (AÑO 2026) -->
+<div class="futuro-travel-intro card" id="futuro-travel-intro">
+<div aria-hidden="true" class="futuro-travel-intro-bg">
+<div class="futuro-intro-portal-glow"></div>
+<div class="futuro-intro-grid-pattern"></div>
+<div class="futuro-intro-rings">
+<div class="futuro-intro-ring futuro-intro-ring--outer"></div>
+<div class="futuro-intro-ring futuro-intro-ring--inner"></div>
+</div>
+</div>
+<div class="futuro-travel-intro-content">
+<div class="futuro-travel-intro-departure-badge">
+<span aria-hidden="true" class="futuro-travel-pulse-dot"></span>
+<span>Punto de partida: Presente</span>
+</div>
+<div aria-label="Año de partida: 2026" class="futuro-travel-year-display">
+<span class="futuro-travel-year-prefix">Año</span>
+<span class="futuro-travel-year-number">2026</span>
+</div>
+<h3 class="futuro-travel-title" id="futuro-travel-title">Viaje al futuro</h3>
+<p class="futuro-travel-subtitle" id="futuro-travel-subtitle">¿Qué será de la tradición taurina en el año 2050?</p>
+<p class="futuro-travel-desc">
+El futuro aún no está escrito. Tus decisiones nos ayudarán a explorar los posibles caminos que podría tomar esta tradición.
+</p>
+
+<!-- Hoja de ruta temporal -->
+<div aria-label="Línea temporal del viaje hacia el año 2050" class="futuro-travel-roadmap">
+<div class="futuro-roadmap-node is-active" data-year="2026">
+<span class="futuro-roadmap-year">2026</span>
+<span class="futuro-roadmap-label">Salida</span>
+</div>
+<div class="futuro-roadmap-line"></div>
+<div class="futuro-roadmap-node" data-year="2030">
+<span class="futuro-roadmap-year">2030</span>
+<span class="futuro-roadmap-label">Hito 1</span>
+</div>
+<div class="futuro-roadmap-line"></div>
+<div class="futuro-roadmap-node" data-year="2035">
+<span class="futuro-roadmap-year">2035</span>
+<span class="futuro-roadmap-label">Hito 2</span>
+</div>
+<div class="futuro-roadmap-line"></div>
+<div class="futuro-roadmap-node" data-year="2040">
+<span class="futuro-roadmap-year">2040</span>
+<span class="futuro-roadmap-label">Hito 3</span>
+</div>
+<div class="futuro-roadmap-line"></div>
+<div class="futuro-roadmap-node" data-year="2045">
+<span class="futuro-roadmap-year">2045</span>
+<span class="futuro-roadmap-label">Hito 4</span>
+</div>
+<div class="futuro-roadmap-line"></div>
+<div class="futuro-roadmap-node" data-year="2049">
+<span class="futuro-roadmap-year">2049</span>
+<span class="futuro-roadmap-label">Hito 5</span>
+</div>
+<div class="futuro-roadmap-line"></div>
+<div class="futuro-roadmap-node is-dest" data-year="2050">
+<span class="futuro-roadmap-year">2050</span>
+<span class="futuro-roadmap-label">Destino</span>
+</div>
+</div>
+
+<div class="futuro-travel-actions">
+<button class="btn btn-primary futuro-btn-travel-start" id="futuro-btn-travel-start" type="button">
+<svg aria-hidden="true" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+<circle cx="12" cy="12" r="10"></circle>
+<polygon points="10 8 16 12 10 16 10 8"></polygon>
+</svg>
+Iniciar viaje
+</button>
+</div>
+</div>
+</div>
+
+<!-- 2. OVERLAY CINEMATOGRÁFICO DE TRANSICIÓN TEMPORAL -->
+<div aria-hidden="true" aria-live="assertive" class="futuro-timetravel-overlay futuro-hidden" id="futuro-timetravel-overlay" role="status">
+<div class="futuro-portal-vortex">
+<div class="futuro-portal-grid"></div>
+<div class="futuro-portal-ring futuro-portal-ring--1"></div>
+<div class="futuro-portal-ring futuro-portal-ring--2"></div>
+<div class="futuro-portal-ring futuro-portal-ring--3"></div>
+<div class="futuro-portal-streaks">
+<span class="futuro-streak"></span>
+<span class="futuro-streak"></span>
+<span class="futuro-streak"></span>
+<span class="futuro-streak"></span>
+<span class="futuro-streak"></span>
+<span class="futuro-streak"></span>
+</div>
+</div>
+<div class="futuro-timetravel-content">
+<span class="futuro-timetravel-badge" id="futuro-timetravel-badge">Desplazamiento temporal</span>
+<div class="futuro-timetravel-year-wrap">
+<span class="futuro-timetravel-year" id="futuro-timetravel-year">2026</span>
+</div>
+<p class="futuro-timetravel-status" id="futuro-timetravel-status">Iniciando salto temporal...</p>
+<div class="futuro-timetravel-loader">
+<div class="futuro-timetravel-loader-bar" id="futuro-timetravel-loader-bar"></div>
+</div>
+</div>
+</div>
+
+<!-- 3. MARCO DEL SIMULADOR / PREGUNTA ACTIVA (DESPLEGADO TRAS CADA SALTO) -->
+<div class="futuro-simulator-card card futuro-hidden" id="futuro-simulator-card">
+<!-- Línea temporal interactiva en tiempo real -->
+<div aria-label="Progreso temporal del viaje" class="futuro-timetravel-timeline" id="futuro-timetravel-timeline">
+<div class="futuro-timeline-nodes" id="futuro-timeline-nodes">
+<div class="futuro-t-node is-completed" data-year="2026"><span class="futuro-t-dot"></span><span class="futuro-t-year">2026</span></div>
+<div class="futuro-t-connector is-active"></div>
+<div class="futuro-t-node is-active" data-year="2030"><span class="futuro-t-dot"></span><span class="futuro-t-year">2030</span></div>
+<div class="futuro-t-connector"></div>
+<div class="futuro-t-node" data-year="2035"><span class="futuro-t-dot"></span><span class="futuro-t-year">2035</span></div>
+<div class="futuro-t-connector"></div>
+<div class="futuro-t-node" data-year="2040"><span class="futuro-t-dot"></span><span class="futuro-t-year">2040</span></div>
+<div class="futuro-t-connector"></div>
+<div class="futuro-t-node" data-year="2045"><span class="futuro-t-dot"></span><span class="futuro-t-year">2045</span></div>
+<div class="futuro-t-connector"></div>
+<div class="futuro-t-node" data-year="2049"><span class="futuro-t-dot"></span><span class="futuro-t-year">2049</span></div>
+<div class="futuro-t-connector"></div>
+<div class="futuro-t-node is-final" data-year="2050"><span class="futuro-t-dot"></span><span class="futuro-t-year">2050</span></div>
+</div>
+</div>
+
 <!-- Barra de progreso e indicador de paso -->
 <div class="futuro-progress-wrapper" id="futuro-progress-wrapper">
 <div class="futuro-progress-header">
+<div class="futuro-stage-meta">
+<span class="badge badge-gold futuro-stage-year-badge" id="futuro-stage-year-badge">Año 2030 • Primera parada</span>
 <span class="futuro-step-label" id="futuro-step-label">Pregunta <strong id="futuro-current-step">01</strong> de <strong>05</strong></span>
+</div>
 <span class="futuro-axis-label" id="futuro-axis-label">Eje 1: El futuro de la tradición</span>
 </div>
 <div aria-label="Progreso de las cinco preguntas" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="futuro-progress-track" id="futuro-progress-track" role="progressbar">
 <div class="futuro-progress-fill" id="futuro-progress-fill" style="width: 20%;"></div>
 </div>
 </div>
+
 <!-- Contenedor dinámico de la pregunta activa -->
 <div class="futuro-question-wrapper" id="futuro-question-wrapper">
 <h3 class="futuro-question-title" id="futuro-question-title">¿Qué debe pasar con las fiestas de toros en el futuro?</h3>
@@ -160,28 +287,39 @@
 </div>
 </aside>
 </div>
+
 <!-- Controles de navegación del cuestionario -->
 <div class="futuro-controls-wrapper" id="futuro-controls-wrapper">
-<button class="btn btn-outline futuro-btn-nav" disabled="" id="futuro-btn-prev" type="button">
+<button class="btn btn-outline futuro-btn-nav" id="futuro-btn-prev" type="button">
 <svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16">
 <polyline points="15 18 9 12 15 6"></polyline>
 </svg>
-              Anterior
-            </button>
+Volver
+</button>
 <span aria-live="polite" class="futuro-controls-hint" id="futuro-controls-hint">Elige una respuesta para continuar</span>
 <button class="btn btn-primary futuro-btn-nav" disabled="" id="futuro-btn-next" type="button">
-              Siguiente
-              <svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16">
+<span id="futuro-btn-next-text">Continuar viaje</span>
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16">
 <polyline points="9 18 15 12 9 6"></polyline>
 </svg>
 </button>
 </div>
 </div>
 </section>
+
 <!-- ===================================================================
-           PARTE 3: REVELACIÓN DEL ESCENARIO HIPOTÉTICO (RESULTADOS)
+           PARTE 3: REVELACIÓN DEL ESCENARIO HIPOTÉTICO (RESULTADOS EN 2050)
            =================================================================== -->
 <section aria-labelledby="futuro-result-heading" class="futuro-results-section" hidden="" id="futuro-resultados">
+<!-- Banner de llegada cinematográfica a 2050 -->
+<div class="futuro-arrival-banner" id="futuro-arrival-banner">
+<div class="futuro-arrival-badge-wrap">
+<span class="badge badge-gold futuro-arrival-badge">Destino temporal alcanzado</span>
+</div>
+<h2 class="futuro-arrival-title">Has llegado al año 2050</h2>
+<p class="futuro-arrival-sub">¿Qué futuro te espera tras tus decisiones a lo largo de este viaje en el tiempo?</p>
+</div>
+
 <div class="card futuro-result-card" id="futuro-result-card">
 <!-- Aviso metodológico OBLIGATORIO Y DESTACADO -->
 <div aria-label="Aviso metodológico fundamental" class="futuro-disclaimer-banner" role="note">
@@ -264,7 +402,13 @@
 </div>
 <!-- Botón de reinicio del simulador -->
 <div class="futuro-result-action">
-<button class="btn btn-outline futuro-btn-restart" id="futuro-btn-restart" type="button">Volver a empezar</button>
+<button class="btn btn-primary futuro-btn-restart" id="futuro-btn-restart" type="button">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<polyline points="1 4 1 10 7 10"></polyline>
+<path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+</svg>
+Reiniciar viaje temporal
+</button>
 </div>
 </div>
 </section>
@@ -512,7 +656,7 @@
 <div class="footer-content">
 <div class="footer-brand">El Legado del Toro</div>
 <p class="footer-subtitle">Las fiestas de toros: arte, cultura y debate</p>
-<p class="footer-copy">Proyecto de clase • Sección 5: El futuro (Durgesh Tomar - 25BDS1030)</p>
+<p class="footer-copy">Proyecto de clase • Sección 5: El futuro</p>
 </div>
 </div>
 </footer>

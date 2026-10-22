@@ -1,14 +1,16 @@
 /**
  * ==========================================================================
  * EL LEGADO DEL TORO — SECCIÓN 5: EL FUTURO
- * Escenarios 2050: ¿Qué futuro tendrá la tauromaquia?
+ * Escenarios 2050: Viaje en el Tiempo hacia el Futuro de la Tauromaquia
  * Archivo: sections/futuro/script.js
  * 
- * Controlador interactivo para la simulación prospectiva.
- * - Navegación paso a paso de las 5 decisiones.
+ * Controlador interactivo para la experiencia cinematográfica de viaje temporal.
+ * - Secuencia: Salida (2026) -> Salto -> Q1 (2030) -> Salto -> Q2 (2035) -> 
+ *   Salto -> Q3 (2040) -> Salto -> Q4 (2045) -> Salto -> Q5 (2049) -> 
+ *   Salto final acelerado -> Llegada a 2050 -> Revelación del Escenario.
  * - Retención de respuestas en memoria JavaScript (sin persistencia en navegador).
  * - Ponderación determinista y transparente de 4 escenarios futuros.
- * - Gestión de empates metodológicos y reinicio completo.
+ * - Soporte para navegación hacia atrás y recálculo dinámico libre de estados obsoletos.
  * ==========================================================================
  */
 
@@ -93,30 +95,62 @@
       rationale: 'Este futuro tiene más puntos en tus respuestas. Los puntos muestran tus elecciones en este juego, no lo que hará toda la sociedad.', bgGradient: 'linear-gradient(135deg, #231F20 0%, #574F4A 60%, #B83232 100%)' }
   };
 
+  /**
+   * Hitos cronológicos del viaje en el tiempo.
+   * La salida es 2026, las 5 preguntas corresponden a 2030, 2035, 2040, 2045 y 2049,
+   * y la revelación del destino es 2050.
+   */
+  const TIMELINE_STOPS = [
+    { index: 0, year: 2030, label: 'Año 2030 • Primera parada', statusText: 'Viajando en el tiempo... Llegando al año 2030' },
+    { index: 1, year: 2035, label: 'Año 2035 • Segundo hito', statusText: 'Avanzando hacia el futuro... Llegando al año 2035' },
+    { index: 2, year: 2040, label: 'Año 2040 • Tercera etapa', statusText: 'Cruzando la década... Llegando al año 2040' },
+    { index: 3, year: 2045, label: 'Año 2045 • Cuarta etapa', statusText: 'Acercándonos al destino... Llegando al año 2045' },
+    { index: 4, year: 2049, label: 'Año 2049 • Última decisión', statusText: 'Última parada antes de 2050... Llegando al año 2049' }
+  ];
+
+  const DEPARTURE_YEAR = 2026;
+  const DESTINATION_YEAR = 2050;
+
   // --------------------------------------------------------------------------
   // 2. MODELO DE ESTADO EN MEMORIA (SIN PERSISTENCIA EN NAVEGADOR)
   // --------------------------------------------------------------------------
 
   const state = {
     currentQuestionIndex: 0,
-    answers: [null, null, null, null, null] // Índice de opción elegida (0 a 3) por cada pregunta
+    answers: [null, null, null, null, null], // Índice de opción elegida (0 a 3) por cada pregunta
+    isTraveling: false,                     // Bloquea clics duplicados durante las transiciones
+    hasStartedJourney: false,
+    displayedYear: DEPARTURE_YEAR
   };
 
   // --------------------------------------------------------------------------
-  // 3. REFERENCIAS A ELEMENTOS DEL DOM (VALIDACIÓN ESTRICTA DE IDS REALES)
+  // 3. REFERENCIAS A ELEMENTOS DEL DOM
   // --------------------------------------------------------------------------
 
   const dom = {
-    // Simulador y progreso
+    // Simulador y secciones principales
     simulatorSection: document.getElementById('futuro-simulador'),
+    travelIntro: document.getElementById('futuro-travel-intro'),
+    btnTravelStart: document.getElementById('futuro-btn-travel-start'),
+    simulatorCard: document.getElementById('futuro-simulator-card'),
+    srAnnouncer: document.getElementById('futuro-sr-announcer'),
+
+    // Overlay cinematográfico de viaje en el tiempo
+    timetravelOverlay: document.getElementById('futuro-timetravel-overlay'),
+    timetravelBadge: document.getElementById('futuro-timetravel-badge'),
+    timetravelYear: document.getElementById('futuro-timetravel-year'),
+    timetravelStatus: document.getElementById('futuro-timetravel-status'),
+
+    // Timeline y progreso
+    timelineNodesContainer: document.getElementById('futuro-timeline-nodes'),
+    stageYearBadge: document.getElementById('futuro-stage-year-badge'),
     stepCounter: document.getElementById('futuro-current-step'),
     axisLabel: document.getElementById('futuro-axis-label'),
     progressTrack: document.getElementById('futuro-progress-track'),
     progressFill: document.getElementById('futuro-progress-fill'),
-    questionTitle: document.getElementById('futuro-question-title'),
-    srAnnouncer: document.getElementById('futuro-sr-announcer'),
 
-    // Opciones y formulario
+    // Pregunta activa y opciones
+    questionTitle: document.getElementById('futuro-question-title'),
     decisionForm: document.getElementById('futuro-decision-form'),
     optionCards: [
       document.getElementById('futuro-card-opt-0'),
@@ -150,10 +184,12 @@
     // Botones de navegación del cuestionario
     btnPrev: document.getElementById('futuro-btn-prev'),
     btnNext: document.getElementById('futuro-btn-next'),
+    btnNextText: document.getElementById('futuro-btn-next-text'),
     controlsHint: document.getElementById('futuro-controls-hint'),
 
-    // Sección de resultados
+    // Sección de resultados y llegada a 2050
     resultsSection: document.getElementById('futuro-resultados'),
+    arrivalBanner: document.getElementById('futuro-arrival-banner'),
     resultBadge: document.getElementById('futuro-result-badge'),
     resultHeading: document.getElementById('futuro-result-heading'),
     resultSubtitle: document.getElementById('futuro-result-subtitle'),
@@ -165,12 +201,179 @@
     barsContainer: document.getElementById('futuro-bars-container'),
     btnRestart: document.getElementById('futuro-btn-restart'),
 
-    // Botón de inicio en el héroe
+    // Botón de inicio en el héroe editorial
     btnStart: document.getElementById('futuro-btn-start')
   };
 
   // --------------------------------------------------------------------------
-  // 4. LÓGICA DE PONDERACIÓN Y RESOLUCIÓN DETERMINISTA
+  // 4. ANIMACIONES Y SECUENCIAS DEL VIAJE TEMPORAL
+  // --------------------------------------------------------------------------
+
+  /**
+   * Anima un contador numérico entre dos años con interpolación suave.
+   * @param {HTMLElement} element - Elemento DOM donde se muestra el número
+   * @param {number} fromYear - Año inicial
+   * @param {number} toYear - Año final
+   * @param {number} duration - Duración en milisegundos
+   * @param {Function} callback - Función al culminar la animación
+   */
+  function animateYearCounter(element, fromYear, toYear, duration, callback) {
+    if (!element) {
+      if (callback) callback();
+      return;
+    }
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || fromYear === toYear) {
+      element.textContent = String(toYear);
+      if (callback) callback();
+      return;
+    }
+
+    const direction = Math.sign(toYear - fromYear);
+    const stepDuration = Math.min(250, duration / Math.abs(toYear - fromYear));
+    let currentYear = fromYear;
+    element.textContent = String(currentYear);
+
+    function step() {
+      currentYear += direction;
+      element.textContent = String(currentYear);
+
+      if (currentYear !== toYear) {
+        setTimeout(step, stepDuration);
+      } else if (callback) {
+        callback();
+      }
+    }
+
+    setTimeout(step, stepDuration);
+  }
+
+  /**
+   * Ejecuta la secuencia visual de viaje temporal entre dos hitos.
+   * @param {number} fromYear 
+   * @param {number} toYear 
+   * @param {string} badgeText 
+   * @param {string} statusText 
+   * @param {number} duration 
+   * @param {Function} onComplete 
+   */
+  function playTimeTravel(fromYear, toYear, badgeText, statusText, duration, onComplete) {
+    if (state.isTraveling) return;
+    state.isTraveling = true;
+
+    const startedAt = performance.now();
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const actualDuration = prefersReduced ? 150 : (duration || 1200);
+
+    // Activar y mostrar overlay
+    if (dom.timetravelOverlay) {
+      dom.timetravelOverlay.hidden = false;
+      dom.timetravelOverlay.classList.remove('futuro-hidden');
+      dom.timetravelOverlay.setAttribute('aria-hidden', 'false');
+      smoothScrollToElement(dom.timetravelOverlay);
+    }
+
+    if (dom.timetravelBadge) {
+      dom.timetravelBadge.textContent = badgeText || 'Desplazamiento temporal';
+    }
+    if (dom.timetravelStatus) {
+      dom.timetravelStatus.textContent = statusText || 'Acelerando a través de las décadas...';
+    }
+
+    // Anuncio auditivo para lectores de pantalla
+    if (dom.srAnnouncer) {
+      dom.srAnnouncer.textContent = 'Viajando en el tiempo desde el año ' + fromYear + ' hacia el año ' + toYear + '.';
+    }
+
+    // Ejecutar contador de años
+    animateYearCounter(dom.timetravelYear, fromYear, toYear, actualDuration, function () {
+      state.displayedYear = toYear;
+
+      setTimeout(function () {
+        if (dom.timetravelOverlay) {
+          dom.timetravelOverlay.classList.add('futuro-hidden');
+          dom.timetravelOverlay.setAttribute('aria-hidden', 'true');
+        }
+        state.isTraveling = false;
+        if (onComplete) onComplete();
+      }, Math.max(prefersReduced ? 50 : 350, 2000 - (performance.now() - startedAt)));
+    });
+  }
+
+  /**
+   * Renderiza la línea de tiempo interactiva superior que refleja la posición actual.
+   * @param {number} currentYear 
+   */
+  function renderTimelineBar(currentYear) {
+    if (!dom.timelineNodesContainer) return;
+
+    const years = [2026, 2030, 2035, 2040, 2045, 2049, 2050];
+    let html = '';
+
+    years.forEach(function (year, idx) {
+      let nodeClass = 'futuro-t-node';
+      if (year === currentYear) {
+        nodeClass += ' is-active';
+      } else if (year < currentYear) {
+        nodeClass += ' is-completed';
+      }
+      if (year === 2050) {
+        nodeClass += ' is-final';
+      }
+
+      html += '<div class="' + nodeClass + '" data-year="' + year + '">' +
+        '<span class="futuro-t-dot"></span>' +
+        '<span class="futuro-t-year">' + year + '</span>' +
+        '</div>';
+
+      if (idx < years.length - 1) {
+        const connClass = (year < currentYear) ? 'futuro-t-connector is-active' : 'futuro-t-connector';
+        html += '<div class="' + connClass + '"></div>';
+      }
+    });
+
+    dom.timelineNodesContainer.innerHTML = html;
+  }
+
+  /**
+   * Inicia el viaje temporal desde la pantalla de salida (2026 -> 2030).
+   */
+  function startJourney() {
+    if (state.isTraveling) return;
+
+    // Ocultar pantalla de salida
+    if (dom.travelIntro) {
+      dom.travelIntro.classList.add('futuro-hidden');
+    }
+
+    // Ejecutar salto temporal hacia la primera pregunta (2026 -> 2030)
+    playTimeTravel(
+      DEPARTURE_YEAR,
+      TIMELINE_STOPS[0].year,
+      'Primer salto temporal',
+      TIMELINE_STOPS[0].statusText,
+      1300,
+      function () {
+        state.hasStartedJourney = true;
+        state.currentQuestionIndex = 0;
+
+        if (dom.simulatorCard) {
+          dom.simulatorCard.classList.remove('futuro-hidden');
+        }
+
+        renderCurrentQuestion();
+        smoothScrollToElement(dom.simulatorCard);
+
+        if (dom.optionCards[0]) {
+          dom.optionCards[0].focus();
+        }
+      }
+    );
+  }
+
+  // --------------------------------------------------------------------------
+  // 5. LÓGICA DE PONDERACIÓN Y RESOLUCIÓN DETERMINISTA
   // --------------------------------------------------------------------------
 
   /**
@@ -246,18 +449,27 @@
   }
 
   // --------------------------------------------------------------------------
-  // 5. RENDERIZADO Y CONTROL DE NAVEGACIÓN
+  // 6. RENDERIZADO Y CONTROL DE NAVEGACIÓN
   // --------------------------------------------------------------------------
 
   /**
-   * Actualiza la interfaz para mostrar la pregunta activa actual.
+   * Actualiza la interfaz para mostrar la pregunta activa actual y su hito temporal.
    */
   function renderCurrentQuestion() {
     const qIndex = state.currentQuestionIndex;
     const currentQ = QUESTIONS[qIndex];
-    if (!currentQ) return;
+    const currentStop = TIMELINE_STOPS[qIndex];
+    if (!currentQ || !currentStop) return;
 
-    // 1. Contador de paso y etiqueta de eje
+    state.displayedYear = currentStop.year;
+
+    // 1. Hito temporal y línea de tiempo
+    if (dom.stageYearBadge) {
+      dom.stageYearBadge.textContent = currentStop.label;
+    }
+    renderTimelineBar(currentStop.year);
+
+    // 2. Contador de paso y etiqueta de eje
     if (dom.stepCounter) {
       dom.stepCounter.textContent = String(qIndex + 1).padStart(2, '0');
     }
@@ -265,7 +477,7 @@
       dom.axisLabel.textContent = currentQ.axis;
     }
 
-    // 2. Barra de progreso accesible
+    // 3. Barra de progreso accesible
     const progressPercent = Math.round(((qIndex + 1) / QUESTIONS.length) * 100);
     if (dom.progressTrack) {
       dom.progressTrack.setAttribute('aria-valuenow', String(progressPercent));
@@ -275,12 +487,12 @@
       dom.progressFill.style.width = progressPercent + '%';
     }
 
-    // 3. Título de la pregunta
+    // 4. Título de la pregunta
     if (dom.questionTitle) {
       dom.questionTitle.textContent = currentQ.prompt;
     }
 
-    // 4. Actualizar las 4 opciones de respuesta y restaurar la selección previa si existe
+    // 5. Actualizar las 4 opciones de respuesta y restaurar la selección previa si existe
     const selectedAnswer = state.answers[qIndex];
 
     currentQ.options.forEach(function (opt, optIndex) {
@@ -298,7 +510,7 @@
       }
     });
 
-    // 5. Caja de dato de contexto y fuente
+    // 6. Caja de dato de contexto y fuente
     if (dom.factText) {
       dom.factText.textContent = currentQ.fact;
     }
@@ -307,41 +519,48 @@
       dom.factSourceVal.href = currentQ.sourceHref;
     }
 
-    // 6. Estado de los botones de navegación
+    // 7. Botón Anterior: siempre disponible (en Q1 regresa a la pantalla de salida de 2026)
     if (dom.btnPrev) {
-      dom.btnPrev.disabled = (qIndex === 0);
+      dom.btnPrev.disabled = false;
+      if (qIndex === 0) {
+        dom.btnPrev.setAttribute('title', 'Regresar al punto de partida (2026)');
+      } else {
+        dom.btnPrev.setAttribute('title', 'Volver a la pregunta anterior (' + TIMELINE_STOPS[qIndex - 1].year + ')');
+      }
     }
 
+    // 8. Botón Siguiente: habilitado solo si la pregunta tiene respuesta registrada
     if (dom.btnNext) {
       const isAnswered = (selectedAnswer !== null);
       dom.btnNext.disabled = !isAnswered;
 
-      // En la última pregunta, actualizar el texto a "Descubrir mi escenario"
       if (qIndex === QUESTIONS.length - 1) {
-        dom.btnNext.innerHTML = 'Ver mi resultado ' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-          '<circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>';
+        if (dom.btnNextText) {
+          dom.btnNextText.textContent = 'Llegar al 2050';
+        }
       } else {
-        dom.btnNext.innerHTML = 'Siguiente ' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-          '<polyline points="9 18 15 12 9 6"></polyline></svg>';
+        const nextYear = TIMELINE_STOPS[qIndex + 1].year;
+        if (dom.btnNextText) {
+          dom.btnNextText.textContent = 'Viajar al ' + nextYear;
+        }
       }
     }
 
-    // 7. Texto de ayuda accesible
+    // 9. Texto de ayuda accesible
     if (dom.controlsHint) {
       if (selectedAnswer === null) {
-        dom.controlsHint.textContent = 'Elige una respuesta para continuar';
+        dom.controlsHint.textContent = 'Elige una respuesta para continuar el viaje';
       } else if (qIndex === QUESTIONS.length - 1) {
-        dom.controlsHint.textContent = 'Respuesta guardada. Pulsa para ver tu resultado.';
+        dom.controlsHint.textContent = 'Decisión registrada. Pulsa para llegar al año 2050.';
       } else {
-        dom.controlsHint.textContent = 'Respuesta guardada. Puedes seguir.';
+        const nextYear = TIMELINE_STOPS[qIndex + 1].year;
+        dom.controlsHint.textContent = 'Decisión registrada. Listo para avanzar hacia ' + nextYear + '.';
       }
     }
 
-    // 8. Anuncio auditivo para lectores de pantalla
+    // 10. Anuncio auditivo para lectores de pantalla
     if (dom.srAnnouncer) {
-      dom.srAnnouncer.textContent = 'Pregunta ' + (qIndex + 1) + ' de 5: ' + currentQ.axis + '. ' + currentQ.prompt;
+      dom.srAnnouncer.textContent = 'Llegaste al año ' + currentStop.year + '. Pregunta ' + (qIndex + 1) + ' de 5: ' + currentQ.axis + '. ' + currentQ.prompt;
     }
   }
 
@@ -350,6 +569,8 @@
    * @param {number} optionIndex - Índice de la opción elegida (0 a 3)
    */
   function handleSelectOption(optionIndex) {
+    if (state.isTraveling) return;
+
     state.answers[state.currentQuestionIndex] = optionIndex;
 
     // Actualizar visualmente las tarjetas y radios
@@ -370,45 +591,158 @@
     // Actualizar el texto de ayuda
     if (dom.controlsHint) {
       if (state.currentQuestionIndex === QUESTIONS.length - 1) {
-        dom.controlsHint.textContent = 'Respuesta guardada. Pulsa para ver tu resultado.';
+        dom.controlsHint.textContent = 'Decisión registrada. Pulsa para llegar al año 2050.';
       } else {
-        dom.controlsHint.textContent = 'Respuesta guardada. Puedes seguir.';
+        const nextYear = TIMELINE_STOPS[state.currentQuestionIndex + 1].year;
+        dom.controlsHint.textContent = 'Decisión registrada. Listo para avanzar hacia ' + nextYear + '.';
       }
     }
   }
 
   /**
-   * Navega a la pregunta anterior respetando las respuestas guardadas en memoria.
+   * Navega hacia la etapa anterior respetando las respuestas guardadas en memoria.
+   * Permite retroceder sin perder información ni generar resultados obsoletos.
    */
   function handlePrev() {
+    if (state.isTraveling) return;
+
     if (state.currentQuestionIndex > 0) {
+      // Retroceder a la pregunta anterior
       state.currentQuestionIndex--;
       renderCurrentQuestion();
-      smoothScrollToElement(dom.simulatorSection);
+      smoothScrollToElement(dom.simulatorCard);
+    } else {
+      // Si está en la pregunta 1 y pulsa Volver: regresar a la pantalla de salida (2026)
+      if (dom.simulatorCard) {
+        dom.simulatorCard.classList.add('futuro-hidden');
+      }
+      if (dom.travelIntro) {
+        dom.travelIntro.classList.remove('futuro-hidden');
+        smoothScrollToElement(dom.travelIntro);
+      }
+      state.hasStartedJourney = false;
+      state.displayedYear = DEPARTURE_YEAR;
+
+      if (dom.srAnnouncer) {
+        dom.srAnnouncer.textContent = 'Regresaste al punto de partida en el año 2026.';
+      }
     }
   }
 
   /**
-   * Avanza a la siguiente pregunta o, si es la última, revela el escenario proyectado.
+   * Avanza a la siguiente etapa temporal o, si es la última pregunta,
+   * activa el viaje definitivo hacia el año 2050.
    */
   function handleNext() {
+    if (state.isTraveling) return;
+
     // Exigir que la pregunta actual esté contestada
     if (state.answers[state.currentQuestionIndex] === null) {
       return;
     }
 
-    if (state.currentQuestionIndex < QUESTIONS.length - 1) {
-      state.currentQuestionIndex++;
-      renderCurrentQuestion();
-      smoothScrollToElement(dom.simulatorSection);
+    const currentQIndex = state.currentQuestionIndex;
+
+    if (currentQIndex < QUESTIONS.length - 1) {
+      // Salto temporal hacia la siguiente pregunta
+      const fromYear = TIMELINE_STOPS[currentQIndex].year;
+      const targetQIndex = currentQIndex + 1;
+      const targetYear = TIMELINE_STOPS[targetQIndex].year;
+
+      if (dom.simulatorCard) {
+        dom.simulatorCard.classList.add('futuro-hidden');
+      }
+
+      playTimeTravel(
+        fromYear,
+        targetYear,
+        'Avanzando en la línea temporal',
+        TIMELINE_STOPS[targetQIndex].statusText,
+        1250,
+        function () {
+          state.currentQuestionIndex = targetQIndex;
+          if (dom.simulatorCard) {
+            dom.simulatorCard.classList.remove('futuro-hidden');
+          }
+          renderCurrentQuestion();
+          smoothScrollToElement(dom.simulatorCard);
+        }
+      );
     } else {
-      // Última pregunta: Calcular y desplegar el resultado
-      showResults();
+      // Salto temporal definitivo hacia 2050 y revelación de la predicción
+      triggerFinalArrivalSequence();
     }
   }
 
+  /**
+   * Secuencia cinematográfica final hacia el año 2050:
+   * 1. Desvanece la última pregunta.
+   * 2. Acelera hacia 2050 con mensajes de anticipación.
+   * 3. Revela el resultado calculado por el algoritmo existente.
+   */
+  function triggerFinalArrivalSequence() {
+    if (state.isTraveling) return;
+    state.isTraveling = true;
+
+    const fromYear = TIMELINE_STOPS[4].year; // 2049
+    const toYear = DESTINATION_YEAR;         // 2050
+
+    const startedAt = performance.now();
+
+    // 1. Ocultar tarjeta de preguntas
+    if (dom.simulatorCard) {
+      dom.simulatorCard.classList.add('futuro-hidden');
+    }
+
+    // 2. Activar overlay de viaje temporal acelerado
+    if (dom.timetravelOverlay) {
+      dom.timetravelOverlay.hidden = false;
+      dom.timetravelOverlay.classList.remove('futuro-hidden');
+      dom.timetravelOverlay.setAttribute('aria-hidden', 'false');
+      smoothScrollToElement(dom.timetravelOverlay);
+    }
+
+    if (dom.timetravelBadge) {
+      dom.timetravelBadge.textContent = 'Salto temporal definitivo';
+    }
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Fase 1: Cálculo
+    if (dom.timetravelStatus) {
+      dom.timetravelStatus.textContent = 'Calculando las posibilidades del futuro…';
+    }
+
+    // Acelerar el contador de años a 2050
+    animateYearCounter(dom.timetravelYear, fromYear, toYear, prefersReduced ? 150 : 1000, function () {
+      state.displayedYear = 2050;
+
+      // Fase 2: Llegada a 2050
+      if (dom.timetravelStatus) {
+        dom.timetravelStatus.textContent = 'Has llegado al año 2050.';
+      }
+
+      setTimeout(function () {
+        // Fase 3: Anticipación del futuro
+        if (dom.timetravelStatus) {
+          dom.timetravelStatus.textContent = '¿Qué futuro te espera?';
+        }
+
+        setTimeout(function () {
+          // Ocultar overlay y desplegar el resultado
+          if (dom.timetravelOverlay) {
+            dom.timetravelOverlay.classList.add('futuro-hidden');
+            dom.timetravelOverlay.setAttribute('aria-hidden', 'true');
+          }
+          state.isTraveling = false;
+          showResults();
+        }, Math.max(prefersReduced ? 100 : 750, 2000 - (performance.now() - startedAt)));
+      }, prefersReduced ? 100 : 750);
+    });
+  }
+
   // --------------------------------------------------------------------------
-  // 6. RENDERIZADO DEL ESCENARIO HIPOTÉTICO (RESULTADOS)
+  // 7. RENDERIZADO DEL ESCENARIO HIPOTÉTICO (RESULTADOS EN 2050)
   // --------------------------------------------------------------------------
 
   /**
@@ -512,38 +846,44 @@
 
     // 8. Anuncio accesible y desplazamiento suave
     if (dom.srAnnouncer) {
-      dom.srAnnouncer.textContent = 'Has terminado. Tu futuro posible es: ' + scenario.title + '.';
+      dom.srAnnouncer.textContent = 'Has llegado al año 2050. Tu escenario proyectado es: ' + scenario.title + '.';
     }
 
-    smoothScrollToElement(dom.resultsSection);
+    smoothScrollToElement(dom.arrivalBanner || dom.resultsSection);
   }
 
   /**
-   * Reinicia el simulador a su estado inicial.
+   * Reinicia la experiencia completa de viaje temporal.
    */
   function handleRestart() {
     // Restablecer el estado en memoria
     state.currentQuestionIndex = 0;
     state.answers = [null, null, null, null, null];
+    state.isTraveling = false;
+    state.hasStartedJourney = false;
+    state.displayedYear = DEPARTURE_YEAR;
 
-    // Ocultar resultados
+    // Ocultar resultados y tarjeta de preguntas
     if (dom.resultsSection) {
       dom.resultsSection.hidden = true;
     }
+    if (dom.simulatorCard) {
+      dom.simulatorCard.classList.add('futuro-hidden');
+    }
 
-    // Re-renderizar pregunta 1
-    renderCurrentQuestion();
-
-    // Desplazar suavemente al inicio del simulador
-    smoothScrollToElement(dom.simulatorSection || dom.btnStart);
+    // Mostrar nuevamente la pantalla de salida de 2026
+    if (dom.travelIntro) {
+      dom.travelIntro.classList.remove('futuro-hidden');
+      smoothScrollToElement(dom.travelIntro);
+    }
 
     if (dom.srAnnouncer) {
-      dom.srAnnouncer.textContent = 'El juego empieza otra vez. Estás en la pregunta 1.';
+      dom.srAnnouncer.textContent = 'El viaje en el tiempo ha sido reiniciado. Te encuentras en el punto de partida en el año 2026.';
     }
   }
 
   // --------------------------------------------------------------------------
-  // 7. UTILIDADES Y CONFIGURACIÓN DE EVENTOS
+  // 8. UTILIDADES Y CONFIGURACIÓN DE EVENTOS
   // --------------------------------------------------------------------------
 
   /**
@@ -563,14 +903,21 @@
    * Conecta los escuchadores de eventos para interactividad y accesibilidad.
    */
   function setupEventListeners() {
-    // Botón inicial "Explorar el futuro"
+    // Botón inicial del Héroe editorial: desplaza suavemente hacia el simulador temporal
     if (dom.btnStart) {
       dom.btnStart.addEventListener('click', function (e) {
         e.preventDefault();
         smoothScrollToElement(dom.simulatorSection);
-        if (dom.optionCards[0]) {
-          dom.optionCards[0].focus();
+        if (dom.btnTravelStart) {
+          dom.btnTravelStart.focus();
         }
+      });
+    }
+
+    // Botón de la pantalla de salida: Iniciar viaje
+    if (dom.btnTravelStart) {
+      dom.btnTravelStart.addEventListener('click', function () {
+        startJourney();
       });
     }
 
@@ -617,12 +964,22 @@
   }
 
   // --------------------------------------------------------------------------
-  // 8. INICIALIZACIÓN AL CARGAR EL DOM
+  // 9. INICIALIZACIÓN AL CARGAR EL DOM
   // --------------------------------------------------------------------------
 
   function init() {
     setupEventListeners();
-    renderCurrentQuestion();
+
+    // Asegurar que la pantalla de salida de 2026 esté visible al cargar
+    if (dom.travelIntro) {
+      dom.travelIntro.classList.remove('futuro-hidden');
+    }
+    if (dom.simulatorCard) {
+      dom.simulatorCard.classList.add('futuro-hidden');
+    }
+    if (dom.resultsSection) {
+      dom.resultsSection.hidden = true;
+    }
   }
 
   if (document.readyState === 'loading') {

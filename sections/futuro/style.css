@@ -197,11 +197,638 @@
   scroll-margin-top: 100px;
 }
 
+/* Utilidad para visibilidad */
+.futuro-hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   2.1 EXPERIENCIA INMERSIVA DE VIAJE EN EL TIEMPO AL AÑO 2050
+   ========================================================================== */
+
+/* --- PANTALLA DE SALIDA: VIAJE AL FUTURO (AÑO 2026) --- */
+.futuro-travel-intro {
+  max-width: 920px;
+  margin: 0 auto var(--space-2xl) auto;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 20%, #1c1514 0%, #0e1118 70%, #080a0f 100%);
+  color: var(--color-bg-sand-light);
+  border: 1.5px solid rgba(201, 151, 0, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 35px rgba(201, 151, 0, 0.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl) var(--space-xl);
+  text-align: center;
+}
+
+.futuro-travel-intro-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.futuro-intro-portal-glow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle, rgba(201, 151, 0, 0.22) 0%, rgba(139, 30, 30, 0.18) 45%, transparent 70%);
+  filter: blur(40px);
+  animation: futuroPulseGlow 6s ease-in-out infinite alternate;
+}
+
+.futuro-intro-grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(201, 151, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 151, 0, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.7;
+}
+
+.futuro-intro-rings {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  pointer-events: none;
+}
+
+.futuro-intro-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(201, 151, 0, 0.28);
+}
+
+.futuro-intro-ring--outer {
+  animation: futuroRotateRings 30s linear infinite;
+}
+
+.futuro-intro-ring--inner {
+  inset: 35px;
+  border: 1px solid rgba(224, 179, 45, 0.35);
+  animation: futuroRotateRingsReverse 20s linear infinite;
+}
+
+.futuro-travel-intro-content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.futuro-travel-intro-departure-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: rgba(201, 151, 0, 0.15);
+  border: 1px solid rgba(201, 151, 0, 0.4);
+  color: var(--color-gold-light);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-md);
+}
+
+.futuro-travel-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-gold);
+  animation: futuroDotBlink 2s ease-in-out infinite;
+}
+
+.futuro-travel-year-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.futuro-travel-year-prefix {
+  font-family: var(--font-serif-heading);
+  font-size: var(--text-lg);
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-style: italic;
+}
+
+.futuro-travel-year-number {
+  font-family: var(--font-serif-display);
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(201, 151, 0, 0.5), 0 0 60px rgba(139, 30, 30, 0.4);
+}
+
+.futuro-travel-title {
+  font-family: var(--font-serif-display);
+  font-size: clamp(1.8rem, 3.8vw, 2.6rem);
+  font-weight: 800;
+  color: var(--color-gold-light);
+  margin-bottom: var(--space-xs);
+  letter-spacing: 0.02em;
+}
+
+.futuro-travel-subtitle {
+  font-family: var(--font-serif-heading);
+  font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+  color: #e2dacb;
+  margin-bottom: var(--space-md);
+  font-style: italic;
+}
+
+.futuro-travel-desc {
+  font-size: var(--text-base);
+  color: #c9c0b1;
+  line-height: 1.7;
+  max-width: 640px;
+  margin: 0 auto var(--space-xl) auto;
+}
+
+/* Hoja de ruta visual en la pantalla de salida */
+.futuro-travel-roadmap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(226, 218, 203, 0.15);
+  margin-bottom: var(--space-xl);
+  overflow-x: auto;
+}
+
+.futuro-roadmap-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.futuro-roadmap-year {
+  font-family: var(--font-serif-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: #c9c0b1;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-fast);
+}
+
+.futuro-roadmap-label {
+  font-size: 0.65rem;
+  color: #8f857d;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.futuro-roadmap-node.is-active .futuro-roadmap-year {
+  background: var(--color-gold);
+  color: #1a1012;
+  border-color: var(--color-gold-light);
+  box-shadow: 0 0 12px rgba(201, 151, 0, 0.6);
+  transform: scale(1.08);
+}
+
+.futuro-roadmap-node.is-active .futuro-roadmap-label {
+  color: var(--color-gold-light);
+  font-weight: 700;
+}
+
+.futuro-roadmap-node.is-dest .futuro-roadmap-year {
+  border-color: rgba(201, 151, 0, 0.4);
+  color: var(--color-gold-light);
+}
+
+.futuro-roadmap-line {
+  height: 2px;
+  width: 20px;
+  background: rgba(226, 218, 203, 0.2);
+  flex-shrink: 0;
+}
+
+.futuro-travel-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.futuro-btn-travel-start {
+  padding: 0.85rem 2.25rem;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #aa2525 100%);
+  border: 1px solid var(--color-gold);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 24px rgba(139, 30, 30, 0.45), 0 0 20px rgba(201, 151, 0, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.futuro-btn-travel-start:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(139, 30, 30, 0.6), 0 0 30px rgba(201, 151, 0, 0.5);
+  background: linear-gradient(135deg, #a62020 0%, #bf2e2e 100%);
+}
+
+.futuro-btn-travel-start:focus-visible {
+  outline: 3px solid var(--color-gold-light);
+  outline-offset: 3px;
+}
+
+/* --- OVERLAY DE TRANSICIÓN CINEMATOGRÁFICA --- */
+.futuro-timetravel-overlay {
+  position: relative;
+  max-width: 900px;
+  min-height: 440px;
+  margin: 0 auto var(--space-2xl) auto;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(circle at center, #1f1113 0%, #0c0f16 70%, #05070a 100%);
+  border: 1.5px solid rgba(201, 151, 0, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 60px rgba(139, 30, 30, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.futuro-portal-vortex {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 600px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.futuro-portal-grid {
+  position: absolute;
+  inset: -50%;
+  background-image: 
+    linear-gradient(rgba(201, 151, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 151, 0, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: rotateX(60deg);
+  animation: futuroGridFly 2s linear infinite;
+  opacity: 0.5;
+}
+
+.futuro-portal-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px dashed rgba(201, 151, 0, 0.4);
+  transform-style: preserve-3d;
+}
+
+.futuro-portal-ring--1 {
+  width: 260px;
+  height: 260px;
+  border-color: rgba(224, 179, 45, 0.6);
+  animation: futuroRingPulse 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+.futuro-portal-ring--2 {
+  width: 380px;
+  height: 380px;
+  border-color: rgba(184, 50, 50, 0.5);
+  animation: futuroRingPulse 2s cubic-bezier(0.25, 1, 0.5, 1) infinite 0.4s;
+}
+
+.futuro-portal-ring--3 {
+  width: 500px;
+  height: 500px;
+  border-color: rgba(201, 151, 0, 0.3);
+  animation: futuroRingPulse 2s cubic-bezier(0.25, 1, 0.5, 1) infinite 0.8s;
+}
+
+.futuro-portal-streaks {
+  position: absolute;
+  inset: 0;
+}
+
+.futuro-streak {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 90px;
+  background: linear-gradient(to top, rgba(201, 151, 0, 0.8), transparent);
+  border-radius: var(--radius-full);
+  transform-origin: center bottom;
+  opacity: 0;
+}
+
+.futuro-streak:nth-child(1) { transform: translate(-50%, -50%) rotate(25deg) translateY(-80px); animation: futuroStreakFly 1.2s ease-out infinite; }
+.futuro-streak:nth-child(2) { transform: translate(-50%, -50%) rotate(85deg) translateY(-80px); animation: futuroStreakFly 1.2s ease-out infinite 0.2s; }
+.futuro-streak:nth-child(3) { transform: translate(-50%, -50%) rotate(155deg) translateY(-80px); animation: futuroStreakFly 1.2s ease-out infinite 0.4s; }
+.futuro-streak:nth-child(4) { transform: translate(-50%, -50%) rotate(210deg) translateY(-80px); animation: futuroStreakFly 1.2s ease-out infinite 0.6s; }
+.futuro-streak:nth-child(5) { transform: translate(-50%, -50%) rotate(275deg) translateY(-80px); animation: futuroStreakFly 1.2s ease-out infinite 0.8s; }
+.futuro-streak:nth-child(6) { transform: translate(-50%, -50%) rotate(330deg) translateY(-80px); animation: futuroStreakFly 1.2s ease-out infinite 1s; }
+
+.futuro-timetravel-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 560px;
+}
+
+.futuro-timetravel-badge {
+  display: inline-block;
+  background: rgba(201, 151, 0, 0.2);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold-light);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-md);
+  box-shadow: 0 0 15px rgba(201, 151, 0, 0.3);
+}
+
+.futuro-timetravel-year-wrap {
+  margin-bottom: var(--space-sm);
+}
+
+.futuro-timetravel-year {
+  font-family: var(--font-serif-display);
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 25px rgba(224, 179, 45, 0.8), 0 0 50px rgba(184, 50, 50, 0.6);
+  display: inline-block;
+  line-height: 1;
+}
+
+.futuro-timetravel-status {
+  font-family: var(--font-serif-heading);
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  font-style: italic;
+  color: var(--color-bg-sand);
+  margin-bottom: var(--space-lg);
+  min-height: 2em;
+}
+
+.futuro-timetravel-loader {
+  width: 220px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.futuro-timetravel-loader-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--color-gold), #ffffff, var(--color-gold), transparent);
+  animation: futuroLoaderSweep 1.2s ease-in-out infinite;
+}
+
+/* --- LÍNEA TEMPORAL SUPERIOR DENTRO DE LA TARJETA DEL SIMULADOR --- */
+.futuro-timetravel-timeline {
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-sand-muted);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.futuro-timeline-nodes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  overflow-x: auto;
+  padding: 0.25rem 0;
+}
+
+.futuro-t-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: all var(--transition-fast);
+}
+
+.futuro-t-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border);
+  border: 2px solid var(--color-surface);
+  transition: all var(--transition-fast);
+}
+
+.futuro-t-year {
+  font-family: var(--font-serif-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.futuro-t-node.is-completed {
+  opacity: 0.9;
+}
+
+.futuro-t-node.is-completed .futuro-t-dot {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+.futuro-t-node.is-completed .futuro-t-year {
+  color: var(--color-text-secondary);
+}
+
+.futuro-t-node.is-active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.futuro-t-node.is-active .futuro-t-dot {
+  background: var(--color-primary);
+  border-color: var(--color-gold);
+  box-shadow: 0 0 10px rgba(139, 30, 30, 0.6), 0 0 6px var(--color-gold);
+  width: 14px;
+  height: 14px;
+}
+
+.futuro-t-node.is-active .futuro-t-year {
+  color: var(--color-primary-dark);
+  font-weight: 800;
+}
+
+.futuro-t-connector {
+  flex-grow: 1;
+  height: 2px;
+  min-width: 16px;
+  background: var(--color-border-subtle);
+  transition: background var(--transition-fast);
+}
+
+.futuro-t-connector.is-active {
+  background: linear-gradient(90deg, var(--color-gold), var(--color-primary));
+}
+
+.futuro-stage-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.futuro-step-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.futuro-step-divider {
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+.futuro-stage-year-badge {
+  font-size: var(--text-xs);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+/* --- BANNER DE LLEGADA AL AÑO 2050 --- */
+.futuro-arrival-banner {
+  max-width: 900px;
+  margin: 0 auto var(--space-xl) auto;
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+  background: radial-gradient(circle at center, #261012 0%, #11141c 70%, #0a0c12 100%);
+  border: 2px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  color: #ffffff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), 0 0 35px rgba(201, 151, 0, 0.25);
+  animation: futuroFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.futuro-arrival-badge-wrap {
+  margin-bottom: var(--space-sm);
+}
+
+.futuro-arrival-badge {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--text-xs);
+}
+
+.futuro-arrival-title {
+  font-family: var(--font-serif-display);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 900;
+  color: var(--color-gold-light);
+  margin-bottom: var(--space-xs);
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 20px rgba(201, 151, 0, 0.4);
+}
+
+.futuro-arrival-sub {
+  font-family: var(--font-serif-heading);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-style: italic;
+  color: var(--color-bg-sand);
+  margin: 0 auto;
+  max-width: 620px;
+}
+
+/* Animaciones del simulador temporal */
+@keyframes futuroPulseGlow {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.95; }
+}
+
+@keyframes futuroRotateRings {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes futuroRotateRingsReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes futuroDotBlink {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes futuroGridFly {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 40px; }
+}
+
+@keyframes futuroRingPulse {
+  0% { transform: scale(0.6) translateZ(0); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: scale(1.6) translateZ(80px); opacity: 0; }
+}
+
+@keyframes futuroStreakFly {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(0) scaleY(0.4); }
+  30% { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(-180px) scaleY(1.4); }
+}
+
+@keyframes futuroLoaderSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes futuroFadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .futuro-simulator-card {
   max-width: 900px;
   margin: 0 auto;
   border-top: 4px solid var(--color-primary);
   box-shadow: var(--shadow-lg);
+  animation: futuroFadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Barra de progreso */
