@@ -109,6 +109,62 @@
         <div class="arte-no-results" id="arte-no-results" hidden aria-live="polite"><span class="arte-no-results-icon" aria-hidden="true">🎨</span><p class="arte-no-results-text">No hay obras en esta categoría.</p></div>
       </div>
     </section>
+    <section class="arte-game-container" id="arte-curator-game" aria-label="Juego de Autenticación de Arte">
+      <div class="site-container">
+        <div class="arte-game-header">
+          <span class="arte-section-badge arte-game-badge">Taller Interactivo</span>
+          <h2 class="arte-game-title" id="arte-game-title">Taller del Curador: Descubre la Falsificación</h2>
+          <p class="arte-game-subtitle">
+            Como curador experto de arte taurino, tu labor es inspeccionar tres obras clave de la colección y detectar la afirmación falsa o anacronismo histórico oculto entre dos hechos verídicos.
+          </p>
+          <div class="arte-game-scoreboard" id="arte-game-scoreboard" aria-live="polite">
+            <span class="arte-game-score-item" id="arte-game-case-counter">Caso: 1 de 3</span>
+            <span class="arte-game-score-divider" aria-hidden="true">|</span>
+            <span class="arte-game-score-item" id="arte-game-score-counter">Obras autenticadas: 0</span>
+          </div>
+        </div>
+
+        <div class="arte-game-card" id="arte-game-card">
+          <div class="arte-game-card-content">
+            <div class="arte-game-artwork-media">
+              <div class="arte-game-img-wrapper">
+                <img class="arte-game-img" id="arte-game-img" src="img/goya_tauromaquia_grabado_1792658945066.jpg" alt="Obra de arte para peritaje" loading="lazy">
+              </div>
+              <div class="arte-game-artwork-meta">
+                <span class="arte-game-era-badge" id="arte-game-era-badge">1815–1816 · Madrid, España</span>
+                <h3 class="arte-game-artwork-title" id="arte-game-artwork-title">La Tauromaquia — Francisco de Goya</h3>
+              </div>
+            </div>
+
+            <div class="arte-game-claims-panel">
+              <p class="arte-game-instruction">Identifica la <span class="arte-game-highlight">afirmación falsa</span> para autenticar la obra:</p>
+              <div class="arte-game-claims-list" id="arte-game-claims-list" role="group" aria-label="Afirmaciones históricas">
+                <!-- Los botones de las afirmaciones se generan dinámicamente -->
+              </div>
+
+              <div class="arte-game-feedback arte-hidden" id="arte-game-feedback" hidden aria-live="assertive">
+                <div class="arte-game-feedback-header">
+                  <span class="arte-game-feedback-icon" id="arte-game-feedback-icon" aria-hidden="true">✓</span>
+                  <h4 class="arte-game-feedback-title" id="arte-game-feedback-title">¡Falsificación detectada con éxito!</h4>
+                </div>
+                <p class="arte-game-feedback-text" id="arte-game-feedback-text"></p>
+                <button type="button" class="arte-game-btn arte-game-btn--next" id="arte-game-next-btn">Siguiente Caso <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arte-game-results arte-hidden" id="arte-game-results" hidden aria-live="polite">
+          <div class="arte-game-results-card">
+            <span class="arte-game-results-badge">Peritaje Concluido</span>
+            <h3 class="arte-game-results-title" id="arte-game-results-title">Evaluación del Curador</h3>
+            <p class="arte-game-results-score" id="arte-game-results-score">Puntuación: 0 de 3</p>
+            <p class="arte-game-results-summary" id="arte-game-results-summary"></p>
+            <button type="button" class="arte-game-btn arte-game-btn--restart" id="arte-game-restart-btn">Volver a jugar <span aria-hidden="true">↺</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="arte-reflection-section" id="arte-reflexion" aria-labelledby="arte-reflexion-title">
       <div class="site-container"><div class="reflection-box"><h2 class="reflection-title" id="arte-reflexion-title"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Mi Reflexión</h2><p>Investigar el arte taurino me ha permitido descubrir que la corrida de toros no puede reducirse a un simple espectáculo: es un sistema simbólico complejo que ha generado algunas de las obras más importantes de la historia del arte occidental. Goya encontró en la tauromaquia un espejo donde reflejar la violencia y la gracia de la condición humana; Picasso la utilizó como lenguaje universal para hablar de guerra, identidad y resistencia.</p><p>Lo que más me ha sorprendido es la coherencia estética que existe entre todas estas formas de arte taurino: el traje de luces con su chaquetilla bordada en oro, el cartel histórico con su litografía cromática, la plaza con su albero dorado y el grabado en aguafuerte comparten una misma paleta —el rojo, el oro, el negro— y una misma tensión dramática. Es como si el arte hubiera reconocido en la corrida una fuente inagotable de contrastes: vida y muerte, belleza y brutalidad, tradición e innovación.</p><p>Esta investigación me ha llevado a comprender que el debate sobre la tauromaquia no puede hacerse de forma honesta sin considerar su dimensión artística. Independientemente de la posición ética de cada uno, negar su valor cultural sería negar una parte fundamental del patrimonio artístico de la humanidad.</p><footer class="arte-reflexion-footer"><cite class="arte-reflexion-author">— Krishna Mishra, Sección 2: El Arte</cite></footer></div></div>
     </section>
