@@ -17,7 +17,7 @@ const MEMBERS = [
     section: 1,
     title: 'La Historia',
     description: 'Orígenes ancestrales, evolución de la lidia y la metamorfosis del toreo a pie en España.',
-    studentName: 'Sukrish',
+    studentName: 'Sukrish (25BDS1058)',
     feature: 'Línea de tiempo interactiva',
     link: 'sections/historia/index.html',
     badge: 'Sección 01'
@@ -26,7 +26,7 @@ const MEMBERS = [
     section: 2,
     title: 'El Arte',
     description: 'Inspiración plástica en Goya, Picasso, literatura universal, música y estética de la tauromaquia.',
-    studentName: '[Name]',
+    studentName: 'Krishna Mishra (25BDS1135)',
     feature: 'Galería visual interactiva',
     link: 'sections/arte/index.html',
     badge: 'Sección 02'
@@ -35,7 +35,7 @@ const MEMBERS = [
     section: 3,
     title: 'La Cultura',
     description: 'Tradición popular, fiestas patronales, arraigo identitario y el toro como símbolo sociológico.',
-    studentName: '[Name]',
+    studentName: 'Abhishek Kumar (25BDS1018)',
     feature: 'Cuestionario interactivo',
     link: 'sections/cultura/index.html',
     badge: 'Sección 03'
@@ -44,7 +44,7 @@ const MEMBERS = [
     section: 4,
     title: 'La Controversia',
     description: 'Debate ético, bienestar animal, argumentos a favor de la tradición y posturas abolicionistas.',
-    studentName: '[Name]',
+    studentName: 'Saurabh Raj (25BDS1005)',
     feature: 'Encuesta y sondeo de opinión',
     link: 'sections/controversia/index.html',
     badge: 'Sección 04'
@@ -53,7 +53,7 @@ const MEMBERS = [
     section: 5,
     title: 'El Futuro',
     description: 'Marco legislativo moderno, relevo generacional y proyecciones de la fiesta en el siglo XXI.',
-    studentName: '[Name]',
+    studentName: 'Durgesh Tomar (25BDS1030)',
     feature: 'Simulación interactiva',
     link: 'sections/futuro/index.html',
     badge: 'Sección 05'
