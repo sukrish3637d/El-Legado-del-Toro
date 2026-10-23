@@ -15,7 +15,7 @@ El proyecto se compone de 5 secciones principales:
 | **Sección 2** | **El Arte** | Krishna Mishra (25BDS1135) | Galería visual interactiva | `sections/arte/index.html` |
 | **Sección 3** | **La Cultura** | Abhishek Kumar (25BDS1018) | Cuestionario interactivo | `sections/cultura/index.html` |
 | **Sección 4** | **La Controversia** | Saurabh Raj (25BDS1005) | Encuesta y sondeo de opinión | `sections/controversia/index.html` |
-| **Sección 5** | **El Futuro** | Durgesh Tomar (25BDS1030) | Simulación interactiva | `sections/futuro/index.html` |
+| **Sección 5** | **El Futuro** | Durgesh Tomar (25BDS1039) | Simulación interactiva | `sections/futuro/index.html` |
 
 ---
 
@@ -42,7 +42,7 @@ El-Legado-del-Toro/
     │   └── index.html
     ├── controversia/            # Sección 4: La Controversia (Saurabh Raj - 25BDS1005)
     │   └── index.html
-    └── futuro/                  # Sección 5: El Futuro (Durgesh Tomar - 25BDS1030)
+    └── futuro/                  # Sección 5: El Futuro (Durgesh Tomar - 25BDS1039)
         └── index.html
 ```
 
