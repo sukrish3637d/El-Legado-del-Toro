@@ -17,7 +17,7 @@
   'use strict';
 
   // --------------------------------------------------------------------------
-  // BANCO DE DATOS: 5 PREGUNTAS DEL CUESTIONARIO
+  // BANCO DE DATOS: 3 PREGUNTAS DEL CUESTIONARIO
   // --------------------------------------------------------------------------
   const PREGUNTAS_QUIZ = [
     {
@@ -48,32 +48,6 @@
     },
     {
       id: 3,
-      pregunta: "¿Qué autor español escribió el poema «Llanto por Ignacio Sánchez Mejías»?",
-      opciones: [
-        "Antonio Machado.",
-        "Federico García Lorca.",
-        "Miguel de Cervantes.",
-        "Gustavo Adolfo Bécquer."
-      ],
-      correcta: 1,
-      explicacion: "Federico García Lorca escribió esta célebre obra poética en 1935 para recordar a su amigo torero.",
-      fuente: "Centro Virtual Cervantes"
-    },
-    {
-      id: 4,
-      pregunta: "¿Qué estilo de arquitectura tiene la Plaza de Las Ventas en Madrid?",
-      opciones: [
-        "Estilo neomudéjar, con ladrillo visto y arcos de herradura.",
-        "Estilo gótico, con grandes ventanas de colores.",
-        "Estilo barroco, con muchas columnas de mármol.",
-        "Estilo moderno, de cristal y metal."
-      ],
-      correcta: 0,
-      explicacion: "Las Ventas es un monumento de estilo neomudéjar con ladrillos tradicionales y arcos de herradura.",
-      fuente: "Comunidad de Madrid — Patrimonio Cultural"
-    },
-    {
-      id: 5,
       pregunta: "En una conversación, si alguien dice «te voy a echar un capote», ¿qué significa?",
       opciones: [
         "Te ofrece una chaqueta para no tener frío.",
@@ -173,7 +147,7 @@
         }
       });
 
-      // Puntuación total sobre 5
+      // Puntuación total sobre el número de preguntas
       if (finalScoreEl) {
         finalScoreEl.textContent = `${puntuacion} / ${PREGUNTAS_QUIZ.length}`;
       }
@@ -181,10 +155,10 @@
       let mensaje = '';
       let insignia = '';
 
-      if (puntuacion === 5) {
+      if (puntuacion === PREGUNTAS_QUIZ.length) {
         insignia = '🥇 ¡Excelente!';
         mensaje = '¡Muy bien! Has acertado todas las preguntas sobre la cultura española.';
-      } else if (puntuacion >= 3) {
+      } else if (puntuacion >= 2) {
         insignia = '🥈 ¡Buen trabajo!';
         mensaje = '¡Muy bien! Conoces las expresiones y las obras culturales más importantes.';
       } else {
