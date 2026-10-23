@@ -53,7 +53,7 @@ const MEMBERS = [
     section: 5,
     title: 'El Futuro',
     description: 'Marco legislativo moderno, relevo generacional y proyecciones de la fiesta en el siglo XXI.',
-    studentName: 'Durgesh Tomar (25BDS1030)',
+    studentName: 'Durgesh Tomar (25BDS1039)',
     feature: 'Simulación interactiva',
     link: 'sections/futuro/index.html',
     badge: 'Sección 05'
